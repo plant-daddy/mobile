@@ -1,25 +1,18 @@
-import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
+import { DefaultTheme, ThemeProvider } from '@react-navigation/native'
+import { useFonts } from 'expo-font'
+import { SplashScreen, Stack } from 'expo-router'
+import { useEffect } from 'react'
 
-export { ErrorBoundary } from "expo-router";
+import { Rubik_300Light, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik'
+import { Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito'
 
-import {
-  Rubik_300Light,
-  Rubik_400Regular,
-  Rubik_700Bold,
-} from "@expo-google-fonts/rubik";
-import {
-  Nunito_400Regular,
-  Nunito_600SemiBold,
-} from "@expo-google-fonts/nunito";
+export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {
-  initialRouteName: "(carousel)/index",
-};
+  initialRouteName: '(carousel)/index'
+}
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -27,34 +20,28 @@ export default function RootLayout() {
     Rubik_400Regular,
     Rubik_700Bold,
     Nunito_400Regular,
-    Nunito_600SemiBold,
-  });
+    Nunito_600SemiBold
+  })
 
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    if (error) throw error
+  }, [error])
 
   useEffect(() => {
-    if (loaded) SplashScreen.hideAsync();
-  }, [loaded]);
+    if (loaded) SplashScreen.hideAsync()
+  }, [loaded])
 
-  if (!loaded) return null;
+  if (!loaded) return null
 
-  return <RootLayoutNav />;
+  return <RootLayoutNav />
 }
 
 function RootLayoutNav() {
   return (
     <ThemeProvider value={DefaultTheme}>
-      <Stack
-        screenOptions={{ headerShown: false }}
-        initialRouteName="(carousel)/index"
-      >
-        <Stack.Screen
-          name="(carousel)/index"
-          options={{ headerShown: false }}
-        />
+      <Stack screenOptions={{ headerShown: false }} initialRouteName="(carousel)/index">
+        <Stack.Screen name="(carousel)/index" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
-  );
+  )
 }

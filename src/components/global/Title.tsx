@@ -1,9 +1,9 @@
-import { colors, fonts } from "@/theme";
-import React from "react";
-import { StyleSheet, Text, TextProps } from "react-native";
+import { colors, fonts } from '@/theme'
+import React from 'react'
+import { StyleSheet, Text, type TextProps } from 'react-native'
 
 interface TitleProps extends TextProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode
 }
 
 export const style = StyleSheet.create({
@@ -11,13 +11,13 @@ export const style = StyleSheet.create({
     fontFamily: fonts.rubik700,
     color: colors.green.dark,
     fontSize: 24,
-    textAlign: "center",
-    margin: 10,
-  },
-});
+    textAlign: 'center',
+    margin: 10
+  }
+})
 
 export const Title = ({ children, ...rest }: TitleProps) => (
   <Text {...rest} style={[style.title, rest.style]}>
     {children}
   </Text>
-);
+)

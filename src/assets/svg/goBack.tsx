@@ -1,23 +1,11 @@
-import * as React from "react";
-import Svg, {
-  Path,
-  Defs,
-  Pattern,
-  Use,
-  Image,
-  SvgProps,
-} from "react-native-svg";
+import * as React from 'react'
+import Svg, { Path, Defs, Pattern, Use, Image, type SvgProps } from 'react-native-svg'
 
 export const GoBackSVG = (props: SvgProps) => (
   <Svg width={36} height={36} viewBox="0 0 50 51" fill="none" {...props}>
     <Path fill="url(#pattern0)" d="M0 0H50V50.175H0z" />
     <Defs>
-      <Pattern
-        id="pattern0"
-        patternContentUnits="objectBoundingBox"
-        width={1}
-        height={1}
-      >
+      <Pattern id="pattern0" patternContentUnits="objectBoundingBox" width={1} height={1}>
         <Use xlinkHref="#image0_1_1437" transform="scale(.0035)" />
       </Pattern>
       <Image
@@ -28,4 +16,4 @@ export const GoBackSVG = (props: SvgProps) => (
       />
     </Defs>
   </Svg>
-);
+)

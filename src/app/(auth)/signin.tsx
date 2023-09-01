@@ -1,21 +1,20 @@
-import { Button, Input, Text, Title } from "@/components/global";
-import { ScreenHeight, ScreenWidth } from "@/theme/dimension";
-import { Link } from "expo-router";
-import { Image, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Button, Input, Text, Title } from '@/components/global'
+import { ScreenHeight, ScreenWidth } from '@/theme/dimension'
+import { Link } from 'expo-router'
+import { Image, View } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function SignIn() {
   return (
     <View
       style={{
-        alignItems: "center",
-        marginVertical: 64,
-      }}
-    >
+        alignItems: 'center',
+        marginVertical: 64
+      }}>
       <Image
-        source={require("../../assets/images/sign-in.png")}
+        source={require('../../assets/images/sign-in.png')}
         style={{
-          maxHeight: ScreenHeight * 0.4,
+          maxHeight: ScreenHeight * 0.4
         }}
         resizeMode="contain"
       />
@@ -27,11 +26,11 @@ export default function SignIn() {
           Login
         </Button>
         <Link href="/signup" asChild>
-          <TouchableOpacity style={{ alignSelf: "center" }}>
+          <TouchableOpacity style={{ alignSelf: 'center' }}>
             <Text>Sign up</Text>
           </TouchableOpacity>
         </Link>
       </View>
     </View>
-  );
+  )
 }
