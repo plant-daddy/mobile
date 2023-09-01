@@ -1,17 +1,16 @@
+import { colors, fonts } from "@/theme";
 import React from "react";
 import {
   Text as NativeText,
   TextProps as NativeTextProps,
   StyleSheet,
 } from "react-native";
-import { colors, fonts } from "../../theme";
 
 interface TextProps extends NativeTextProps {
   children: React.ReactNode;
-  marginHorizontal?: number;
 }
 
-export const style = StyleSheet.create({
+const style = StyleSheet.create({
   text: {
     fontFamily: fonts.rubik300,
     color: colors.green.dark,
@@ -22,12 +21,8 @@ export const style = StyleSheet.create({
   },
 });
 
-export function Text({ children, marginHorizontal, ...rest }: TextProps) {
-  const marginStyle = { marginHorizontal };
-
-  return (
-    <NativeText {...rest} style={[style.text, marginStyle, rest.style]}>
-      {children}
-    </NativeText>
-  );
-}
+export const Text = ({ children, ...rest }: TextProps) => (
+  <NativeText {...rest} style={[style.text, rest.style]}>
+    {children}
+  </NativeText>
+);

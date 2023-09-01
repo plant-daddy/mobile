@@ -16,7 +16,7 @@ import {
 } from "@expo-google-fonts/nunito";
 
 export const unstable_settings = {
-  initialRouteName: "(carousel)",
+  initialRouteName: "(carousel)/index",
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -46,8 +46,14 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <ThemeProvider value={DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(carousel)" options={{ headerShown: false }} />
+      <Stack
+        screenOptions={{ headerShown: false }}
+        initialRouteName="(carousel)/index"
+      >
+        <Stack.Screen
+          name="(carousel)/index"
+          options={{ headerShown: false }}
+        />
       </Stack>
     </ThemeProvider>
   );

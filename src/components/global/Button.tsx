@@ -1,3 +1,5 @@
+import { colors } from "@/theme";
+import { Href, Link, router } from "expo-router";
 import React from "react";
 import {
   TouchableHighlight,
@@ -7,15 +9,15 @@ import {
   TextStyle,
   StyleProp,
 } from "react-native";
-import { colors } from "../../theme";
 
 type ButtonProps = TouchableHighlightProps & {
   children: React.ReactNode;
   textStyle?: StyleProp<TextStyle>;
   primary?: boolean;
+  href?: Href<string>;
 };
 
-export const style = StyleSheet.create({
+const style = StyleSheet.create({
   button: {
     alignItems: "center",
     justifyContent: "center",
@@ -32,16 +34,20 @@ export const style = StyleSheet.create({
   },
 });
 
-export function Button({ children, primary, textStyle, ...rest }: ButtonProps) {
-  return (
-    <TouchableHighlight
-      {...rest}
-      style={[
-        style.button,
-        { ...(primary && style["primary"]), ...(rest.style as Object) },
-      ]}
-    >
-      <Text style={[style.primaryText]}>{children}</Text>
-    </TouchableHighlight>
-  );
-}
+export const Button = ({
+  children,
+  primary,
+  textStyle,
+  href,
+  ...rest
+}: ButtonProps) => (
+  <TouchableHighlight
+    {...rest}
+    style={[
+      style.button,
+      { ...(primary && style["primary"]), ...(rest.style as Object) },
+    ]}
+  >
+    <Text style={[style.primaryText]}>{children}</Text>
+  </TouchableHighlight>
+);

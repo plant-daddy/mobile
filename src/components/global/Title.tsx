@@ -1,11 +1,9 @@
+import { colors, fonts } from "@/theme";
 import React from "react";
 import { StyleSheet, Text, TextProps } from "react-native";
-import { fonts, colors } from "../../theme";
 
 interface TitleProps extends TextProps {
   children?: React.ReactNode;
-  marginHorizontal?: number;
-  marginTop?: number;
 }
 
 export const style = StyleSheet.create({
@@ -18,17 +16,8 @@ export const style = StyleSheet.create({
   },
 });
 
-export function Title({
-  children,
-  marginHorizontal,
-  marginTop,
-  ...rest
-}: TitleProps) {
-  const marginStyle = { marginHorizontal, marginTop };
-
-  return (
-    <Text {...rest} style={[style.title, marginStyle, rest.style]}>
-      {children}
-    </Text>
-  );
-}
+export const Title = ({ children, ...rest }: TitleProps) => (
+  <Text {...rest} style={[style.title, rest.style]}>
+    {children}
+  </Text>
+);

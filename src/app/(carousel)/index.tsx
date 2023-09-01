@@ -1,12 +1,10 @@
-import { useNavigation } from "expo-router";
+import { Button, Text, Title } from "@/components/global";
+import { colors } from "@/theme";
+import { ScreenHeight, WindowWidth } from "@/theme/dimension";
+import { Link, router } from "expo-router";
 import { useRef, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { ScreenHeight, WindowWidth } from "../../theme/dimension";
-import { Title } from "../../components/global/Title";
-import { Text } from "../../components/global/Text";
-import { colors } from "../../theme";
-import { Button } from "../../components/global/Button";
 
 const items = [
   {
@@ -80,7 +78,6 @@ const SlideBox = ({ slide }: { slide: (typeof items)[number] }) => (
 );
 
 export default function Carousel() {
-  const { navigate } = useNavigation();
   const [active, setActive] = useState<number>(0);
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -145,9 +142,7 @@ export default function Carousel() {
           primary
           style={{ borderRadius: 4, padding: 16 }}
           onPress={() => {
-            if (active === 3) {
-            }
-            // navigate("");
+            if (active === 2) router.replace("/(auth)/signin");
             else
               scrollViewRef.current?.scrollTo({
                 x: WindowWidth * (active + 1),
@@ -157,9 +152,12 @@ export default function Carousel() {
         >
           {active === 2 ? "Let's start" : "Next"}
         </Button>
-        <TouchableOpacity style={{ alignSelf: "flex-end", marginBottom: 24 }}>
-          <Text>Skip</Text>
-        </TouchableOpacity>
+
+        <Link href="/(auth)/signin" asChild>
+          <TouchableOpacity style={{ alignSelf: "flex-end", marginBottom: 24 }}>
+            <Text>Skip</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
     </View>
   );
