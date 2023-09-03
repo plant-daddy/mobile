@@ -1,15 +1,17 @@
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
 
 import { Rubik_300Light, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik'
 import { Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito'
+import { colors } from '@/theme'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+// import { AuthProvider } from '@/contexts/auth'
 
 export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {
-  initialRouteName: '(carousel)/index'
+  initialRouteName: 'carousel'
 }
 
 SplashScreen.preventAutoHideAsync()
@@ -38,10 +40,18 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <ThemeProvider value={DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }} initialRouteName="(carousel)/index">
-        <Stack.Screen name="(carousel)/index" options={{ headerShown: false }} />
+    // <AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Stack
+        screenOptions={{
+          headerShown: false
+        }}
+        initialRouteName="carousel">
+        <Stack.Screen name="carousel" options={{ headerShown: false }} />
+        <Stack.Screen name="auth/signin" options={{ headerShown: false }} />
+        <Stack.Screen name="auth/signup" options={{ headerShown: false }} />
       </Stack>
-    </ThemeProvider>
+    </GestureHandlerRootView>
+    // </AuthProvider>
   )
 }

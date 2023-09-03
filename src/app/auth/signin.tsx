@@ -1,10 +1,14 @@
 import { Button, Input, Text, Title } from '@/components/global'
+// import { useAuth } from '@/contexts/auth'
 import { ScreenHeight, ScreenWidth } from '@/theme/dimension'
-import { Link } from 'expo-router'
+import { Link, useNavigation } from 'expo-router'
 import { Image, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function SignIn() {
+  // const { signIn } = useAuth()
+  const { navigate } = useNavigation()
+
   return (
     <View
       style={{
@@ -22,10 +26,13 @@ export default function SignIn() {
         <Title>Login</Title>
         <Input placeholder="Email" style={{ padding: 8 }} />
         <Input secureTextEntry placeholder="Password" style={{ padding: 8 }} />
-        <Button primary style={{ borderRadius: 4, padding: 16 }}>
-          Login
-        </Button>
-        <Link href="/signup" asChild>
+        <Link href="/tabs" asChild>
+          <Button primary style={{ borderRadius: 4, padding: 16 }}>
+            Login
+          </Button>
+        </Link>
+
+        <Link href="/auth/signup" asChild>
           <TouchableOpacity style={{ alignSelf: 'center' }}>
             <Text>Sign up</Text>
           </TouchableOpacity>

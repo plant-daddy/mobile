@@ -4,6 +4,7 @@ import { StyleSheet, Text, type TextProps } from 'react-native'
 
 interface TitleProps extends TextProps {
   children?: React.ReactNode
+  color?: string
 }
 
 export const style = StyleSheet.create({
@@ -16,7 +17,7 @@ export const style = StyleSheet.create({
   }
 })
 
-export const Title = ({ children, ...rest }: TitleProps) => (
+export const Title = ({ children, color, ...rest }: TitleProps) => (
   <Text {...rest} style={[style.title, rest.style]}>
     {children}
   </Text>

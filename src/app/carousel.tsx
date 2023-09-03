@@ -20,7 +20,7 @@ const items = [
           alignSelf: 'flex-start'
         }}
         resizeMode="contain"
-        source={require('../../assets/images/intro-1.png')}
+        source={require('../assets/images/intro-1.png')}
       />
     )
   },
@@ -36,7 +36,7 @@ const items = [
           alignSelf: 'flex-start'
         }}
         resizeMode="contain"
-        source={require('../../assets/images/intro-2.png')}
+        source={require('../assets/images/intro-2.png')}
       />
     )
   },
@@ -53,7 +53,7 @@ const items = [
           alignSelf: 'flex-start'
         }}
         resizeMode="cover"
-        source={require('../../assets/images/intro-3.png')}
+        source={require('../assets/images/intro-3.png')}
       />
     )
   }
@@ -133,7 +133,7 @@ export default function Carousel() {
           primary
           style={{ borderRadius: 4, padding: 16 }}
           onPress={() => {
-            if (active === 2) router.replace('/(auth)/signin')
+            if (active === 2) router.replace('/auth/signin')
             else {
               scrollViewRef.current?.scrollTo({
                 x: WindowWidth * (active + 1),
@@ -144,7 +144,7 @@ export default function Carousel() {
           {active === 2 ? "Let's start" : 'Next'}
         </Button>
 
-        <Link href="/(auth)/signin" asChild>
+        <Link href="/auth/signin" asChild>
           <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 24 }}>
             <Text>Skip</Text>
           </TouchableOpacity>

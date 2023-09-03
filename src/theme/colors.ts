@@ -5,7 +5,8 @@ export const colors = {
     dark: '#124647'
   },
   white: {
-    primary: '#F2F2F2'
+    primary: '#F2F2F2',
+    light: '#FFFFFF'
   },
   gray: {
     primary: '#D0E1DD'

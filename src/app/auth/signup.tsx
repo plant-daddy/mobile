@@ -25,7 +25,7 @@ export default function SignUp() {
         <Button primary style={{ borderRadius: 4, padding: 16, width: 'auto' }}>
           Sign up
         </Button>
-        <Link href="/signin" asChild>
+        <Link href="/auth/signin" asChild>
           <TouchableOpacity style={{ alignSelf: 'center' }}>
             <Text>Login</Text>
           </TouchableOpacity>

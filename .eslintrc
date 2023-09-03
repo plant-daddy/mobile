@@ -9,6 +9,7 @@
   },
   "plugins": ["react"],
   "rules": {
+    "curly": "off",
     "no-param-reassign": "off",
     "import/no-extraneous-dependencies": "warn",
     "react/react-in-jsx-scope": "off",
@@ -50,6 +51,10 @@
     "react-hooks/rules-of-hooks": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
-    "@typescript-eslint/space-before-function-paren": "off"
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/no-misused-promises": "off"
   }
 }
