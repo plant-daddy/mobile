@@ -87,6 +87,7 @@ export default function Home() {
             backgroundColor={colors.green.dark}
             textColor={colors.white.primary}
             title="ALL PLANTS"
+            style={{ marginBottom: 200 }}
           />
         </Animated.View>
       </GestureDetector>

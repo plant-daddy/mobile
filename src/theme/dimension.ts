@@ -4,6 +4,7 @@ const WINDOW = Dimensions.get('window')
 const SCREEN = Dimensions.get('screen')
 
 export const HorizontalInset = 24
+export const VerticalInset = 48
 
 export const WindowWidth = WINDOW.width
 export const ScreenWidth = SCREEN.width

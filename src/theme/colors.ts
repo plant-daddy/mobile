@@ -11,15 +11,17 @@ export const colors = {
   gray: {
     primary: '#D0E1DD'
   },
-
+  red: {
+    primary: '#E83F5B'
+  },
   labels: {
     water: {
-      background: '#E6F1FA',
-      text: '#3D7199'
+      backgroundColor: '#E6F1FA',
+      color: '#3D7199'
     },
     fertilize: {
-      background: '#FAECE6',
-      text: '#A4654A'
+      backgroundColor: '#FAECE6',
+      color: '#A4654A'
     }
   }
 }

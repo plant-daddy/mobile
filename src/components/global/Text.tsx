@@ -4,6 +4,7 @@ import { Text as NativeText, type TextProps as NativeTextProps, StyleSheet } fro
 
 interface TextProps extends NativeTextProps {
   children: React.ReactNode
+  color?: string
 }
 
 const style = StyleSheet.create({
@@ -17,8 +18,8 @@ const style = StyleSheet.create({
   }
 })
 
-export const Text = ({ children, ...rest }: TextProps) => (
-  <NativeText {...rest} style={[style.text, rest.style]}>
+export const Text = ({ children, color, ...rest }: TextProps) => (
+  <NativeText {...rest} style={[style.text, { color }, rest.style]}>
     {children}
   </NativeText>
 )
