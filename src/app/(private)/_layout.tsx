@@ -1,10 +1,11 @@
+import { colors } from '@/theme'
 import { Slot } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
+import { StatusBar } from 'react-native'
 
 export default function PrivateLayout() {
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar barStyle="dark-content" backgroundColor={colors.white.primary} />
       <Slot />
     </>
   )
