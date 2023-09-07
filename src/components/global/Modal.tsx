@@ -1,5 +1,4 @@
 import { colors } from '@/theme'
-import { HorizontalInset } from '@/theme/dimension'
 import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 
 import { SafeAreaView, View } from 'react-native'

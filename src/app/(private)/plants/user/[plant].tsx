@@ -6,7 +6,7 @@ import { View } from 'react-native'
 export default function PlantDetails() {
   const { plant } = useLocalSearchParams()
 
-  const { data } = useUserPlant(plant)
+  const { data } = useUserPlant(plant as string)
 
   if (!data) return <></>
 

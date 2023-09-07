@@ -3,7 +3,6 @@ import React from 'react'
 import {
   Text,
   type TouchableHighlightProps,
-  StyleSheet,
   type TextStyle,
   type StyleProp,
   Pressable
@@ -15,32 +14,32 @@ type ButtonProps = TouchableHighlightProps & {
   primary?: boolean
 }
 
-const style = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 4,
-    padding: 16
-  },
-  primaryText: {
-    color: colors.white.primary
-  },
-  linkText: {
-    color: colors.green.dark,
-    textDecorationLine: 'underline'
-  }
-})
-
 export const Button = ({ children, primary, textStyle, ...rest }: ButtonProps) => (
   <Pressable
     {...rest}
     style={({ pressed }) => [
-      style.button,
       {
-        ...(primary && { backgroundColor: colors.green[pressed ? 'dark' : 'light'] }),
+        opacity: pressed ? 0.8 : 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 4,
+        padding: 16
+      },
+      {
+        ...(primary && { backgroundColor: colors.green.light }),
         ...(rest.style as Object)
       }
     ]}>
-    <Text style={{ ...(primary && style.primaryText) }}>{children}</Text>
+    <Text
+      style={[
+        {
+          ...(primary && {
+            color: colors.white.primary
+          })
+        },
+        textStyle
+      ]}>
+      {children}
+    </Text>
   </Pressable>
 )
