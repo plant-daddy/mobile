@@ -1,12 +1,11 @@
 import { Button, Input, Text, Title } from '@/components/global'
 // import { useAuth } from '@/contexts/auth'
 import { ScreenHeight, ScreenWidth } from '@/theme/dimension'
-import { Link, useNavigation } from 'expo-router'
+import { Link } from 'expo-router'
 import { Image, View, Pressable } from 'react-native'
 
 export default function SignIn() {
   // const { signIn } = useAuth()
-  const { navigate } = useNavigation()
 
   return (
     <View
@@ -25,11 +24,11 @@ export default function SignIn() {
         <Title style={{ marginVertical: 8 }}>Login</Title>
         <Input placeholder="Email" />
         <Input secureTextEntry placeholder="Password" />
-        <Link href="/tabs" asChild>
+        <Link href="/home" asChild>
           <Button primary>Login</Button>
         </Link>
 
-        <Link href="/auth/signup" asChild>
+        <Link href="/signup" asChild>
           <Pressable style={{ alignSelf: 'center' }}>
             <Text>Sign up</Text>
           </Pressable>

@@ -1,4 +1,5 @@
 import { ListView } from '@/components/plants'
+import { usePlants, useUserPlants } from '@/hooks'
 import { colors } from '@/theme'
 import { ScreenHeight, ScreenWidth } from '@/theme/dimension'
 import { useCallback, useEffect } from 'react'
@@ -15,6 +16,9 @@ import Animated, {
 const MaxTranslateY = -ScreenHeight + 50
 
 export default function Home() {
+  const { data: plants } = usePlants()
+  const { data: userPlants } = useUserPlants()
+
   const translateY = useSharedValue(0)
   const context = useSharedValue({ y: 0 })
 
@@ -58,8 +62,9 @@ export default function Home() {
         textColor={colors.green.dark}
         title="MY PLANTS"
         style={{ paddingTop: 48 }}
-        canAddPlant
         count
+        isUserPlant
+        plants={userPlants ?? []}
       />
       <GestureDetector gesture={gesture}>
         <Animated.View
@@ -89,6 +94,7 @@ export default function Home() {
             textColor={colors.white.primary}
             title="ALL PLANTS"
             style={{ marginBottom: 200 }}
+            plants={plants ?? []}
           />
         </Animated.View>
       </GestureDetector>

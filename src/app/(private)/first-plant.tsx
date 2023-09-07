@@ -1,5 +1,5 @@
 import { Text } from '@/components/global'
-import { AddPlant } from '@/components/plants/AddPlant'
+import { AddPlant } from '@/components/plants'
 import { HorizontalInset } from '@/theme/dimension'
 import { Link } from 'expo-router'
 import { Pressable, View } from 'react-native'
@@ -9,7 +9,7 @@ export default function FirstPlant() {
     <View style={{ marginVertical: 64, alignItems: 'center', marginHorizontal: HorizontalInset }}>
       <AddPlant title="Let's start by adding your first plant" />
 
-      <Link href="/tabs" asChild>
+      <Link href="/home" asChild replace>
         <Pressable style={{ alignSelf: 'center', marginTop: 16 }}>
           <Text>Skip this step</Text>
         </Pressable>

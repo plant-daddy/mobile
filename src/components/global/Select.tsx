@@ -83,22 +83,21 @@ export const Select = ({
 
   return (
     <>
-      <View
-        style={{ borderColor: colors.green.light, borderWidth: 1, borderRadius: 4, padding: 16 }}>
-        <Pressable
-          onPress={() => {
-            onOpen()
-          }}>
-          <Text style={{ color: selectedValue ? colors.green.dark : colors.gray.mid }}>
-            {selectedValue ? selectedValueLabel : placeholder}
-          </Text>
-        </Pressable>
-      </View>
+      <Pressable
+        style={{ borderColor: colors.green.light, borderWidth: 1, borderRadius: 4, padding: 16 }}
+        onPress={() => {
+          onOpen()
+        }}>
+        <Text style={{ color: selectedValue ? colors.green.dark : colors.gray.mid }}>
+          {selectedValue ? selectedValueLabel : placeholder}
+        </Text>
+      </Pressable>
       <Modal
         isVisible={isOpen}
         onBackdropPress={onClose}
         animationIn="slideInUp"
-        hideModalContentWhileAnimating>
+        hideModalContentWhileAnimating
+        style={{ height: '80%' }}>
         {isSearchable && (
           <Input
             style={{
@@ -106,7 +105,7 @@ export const Select = ({
               marginBottom: 16,
               borderColor: colors.gray.primary
             }}
-            placeholder="Pesquisar..."
+            placeholder="Type in your search"
             placeholderTextColor={colors.gray.mid}
             onChangeText={(t) => {
               setSearchTerm(t)
@@ -118,7 +117,6 @@ export const Select = ({
           {!!searchedData && searchedData.length > 0 ? (
             <FlatList
               contentContainerStyle={{ marginHorizontal: 24 }}
-              showsVerticalScrollIndicator={false}
               data={searchedData}
               keyExtractor={(_, index) => index.toString()}
               ItemSeparatorComponent={() => (
@@ -126,6 +124,7 @@ export const Select = ({
               )}
               renderItem={(item) =>
                 renderItem ? (
+                  // @ts-expect-error
                   cloneElement(renderItem(item), {
                     onSelect,
                     selectedValue

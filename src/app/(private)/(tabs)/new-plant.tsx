@@ -1,4 +1,4 @@
-import { AddPlant } from '@/components/plants/AddPlant'
+import { AddPlant } from '@/components/plants'
 import { View } from 'react-native'
 
 export default function NewPlant() {

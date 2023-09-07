@@ -36,13 +36,16 @@ export const Modal = forwardRef<ModalRef, Partial<ModalProps>>(function modal(pr
       backdropColor={colors.gray.backdrop}
       style={{ margin: 0, justifyContent: 'flex-end' }}>
       <View
-        style={{
-          paddingVertical: 24,
-          height: '60%',
-          backgroundColor: colors.white.light,
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16
-        }}>
+        style={[
+          {
+            paddingVertical: 24,
+            height: '60%',
+            backgroundColor: colors.white.light,
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16
+          },
+          rest.style
+        ]}>
         <SafeAreaView style={{ flex: 1 }}>{children}</SafeAreaView>
       </View>
     </RNModal>

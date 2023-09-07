@@ -133,7 +133,7 @@ export default function Carousel() {
           primary
           style={{ borderRadius: 4, padding: 16 }}
           onPress={() => {
-            if (active === 2) router.replace('/auth/signin')
+            if (active === 2) router.replace('/signin')
             else {
               scrollViewRef.current?.scrollTo({
                 x: WindowWidth * (active + 1),
@@ -144,7 +144,7 @@ export default function Carousel() {
           {active === 2 ? "Let's start" : 'Next'}
         </Button>
 
-        <Link href="/auth/signin" asChild>
+        <Link href="/signin" asChild>
           <Pressable style={{ alignSelf: 'flex-end', marginBottom: 24 }}>
             <Text>Skip</Text>
           </Pressable>

@@ -26,7 +26,7 @@ export default function SignUp() {
             Sign up
           </Button>
         </Link>
-        <Link href="/auth/signin" asChild>
+        <Link href="/signin" asChild>
           <Pressable style={{ alignSelf: 'center' }}>
             <Text>Login</Text>
           </Pressable>

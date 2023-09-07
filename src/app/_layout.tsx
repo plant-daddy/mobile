@@ -1,17 +1,14 @@
 import { useFonts } from 'expo-font'
-import { SplashScreen, Stack } from 'expo-router'
+import { Slot, SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
 
 import { Rubik_300Light, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik'
 import { Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 // import { AuthProvider } from '@/contexts/auth'
 
 export { ErrorBoundary } from 'expo-router'
-
-export const unstable_settings = {
-  initialRouteName: 'carousel'
-}
 
 SplashScreen.preventAutoHideAsync()
 
@@ -38,19 +35,15 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const queryClient = new QueryClient()
+
   return (
     // <AuthProvider>
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack
-        screenOptions={{
-          headerShown: false
-        }}
-        initialRouteName="carousel">
-        <Stack.Screen name="carousel" options={{ headerShown: false }} />
-        <Stack.Screen name="auth/signin" options={{ headerShown: false }} />
-        <Stack.Screen name="auth/signup" options={{ headerShown: false }} />
-      </Stack>
-    </GestureHandlerRootView>
+    <QueryClientProvider client={queryClient}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Slot />
+      </GestureHandlerRootView>
+    </QueryClientProvider>
     // </AuthProvider>
   )
 }
