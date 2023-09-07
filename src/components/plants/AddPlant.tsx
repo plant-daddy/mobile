@@ -26,16 +26,19 @@ export const AddPlant = ({ title }: { title: string }) => {
           onSelect={(value) => {
             setSelectedValue(value)
           }}
+          inputLabel="*Search by: botanical name, common name or type"
           renderItem={({ item }) => (
             <SelectOption value={item.id}>
-              <View style={{ alignItems: 'center', gap: 8 }}>
+              <View style={{ alignItems: 'flex-start', gap: 8, flexDirection: 'row' }}>
                 <Image
                   source={{ uri: item.image }}
                   style={{ width: 80, height: 80, borderRadius: 16 }}
                 />
                 <Text
                   style={{
-                    fontFamily: item.id === selectedValue ? fonts.rubik400 : fonts.rubik300
+                    fontFamily: item.id === selectedValue ? fonts.rubik400 : fonts.rubik300,
+                    fontSize: 18,
+                    flexShrink: 1
                   }}>
                   {getPlantFirstName(item.commonName)}
                 </Text>

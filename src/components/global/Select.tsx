@@ -30,6 +30,7 @@ export const Select = ({
   selectedValueLabel,
   placeholder,
   renderItem,
+  inputLabel,
   onSelect: onSelectProp,
   ...rest
 }: {
@@ -40,6 +41,7 @@ export const Select = ({
   noResultsMessage?: string
   placeholder?: string
   searchableProps?: '*' | string[]
+  inputLabel?: string
 } & ViewProps &
   Pick<FlatListProps<any>, 'renderItem'>) => {
   const { isOpen, onOpen, onClose } = useModal()
@@ -97,26 +99,26 @@ export const Select = ({
         onBackdropPress={onClose}
         animationIn="slideInUp"
         hideModalContentWhileAnimating
-        style={{ height: '80%' }}>
+        style={{ height: '80%', paddingHorizontal: HorizontalInset }}>
         {isSearchable && (
-          <Input
-            style={{
-              marginHorizontal: HorizontalInset,
-              marginBottom: 16,
-              borderColor: colors.gray.primary
-            }}
-            placeholder="Type in your search"
-            placeholderTextColor={colors.gray.mid}
-            onChangeText={(t) => {
-              setSearchTerm(t)
-            }}
-            value={searchTerm}
-          />
+          <>
+            <Input
+              style={{
+                borderColor: colors.gray.primary
+              }}
+              placeholder="Type in your search"
+              placeholderTextColor={colors.gray.mid}
+              onChangeText={(t) => {
+                setSearchTerm(t)
+              }}
+              value={searchTerm}
+            />
+            {inputLabel && <Text style={{ fontSize: 12 }}>{inputLabel}</Text>}
+          </>
         )}
         <View style={{ flex: 1 }}>
           {!!searchedData && searchedData.length > 0 ? (
             <FlatList
-              contentContainerStyle={{ marginHorizontal: 24 }}
               data={searchedData}
               keyExtractor={(_, index) => index.toString()}
               ItemSeparatorComponent={() => (
@@ -175,9 +177,14 @@ export const SelectOption = ({
   return (
     <Pressable
       onPress={onOptionSelect}
-      style={{ paddingVertical: 16, flexDirection: 'row', paddingHorizontal: 8 }}>
+      style={{
+        paddingVertical: 16,
+        flexDirection: 'row',
+        paddingHorizontal: 8,
+        gap: 16
+      }}>
       <View style={{ flex: 1, backgroundColor: 'transparent' }}>{renderChildren()}</View>
-      {isSelected && <MaterialIcons name="check" />}
+      {isSelected && <MaterialIcons name="check" size={16} />}
     </Pressable>
   )
 }
