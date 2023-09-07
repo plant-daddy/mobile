@@ -1,4 +1,4 @@
-import { type FullReminder } from '@/utils/reminders'
+import { type Reminder as ReminderType } from '@/utils/reminders'
 import { Image, View } from 'react-native'
 import { Text } from '../global'
 import { Fertilize, Water } from '@/assets/svg'
@@ -18,6 +18,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import { MaterialIcons } from '@expo/vector-icons'
 import { ScreenWidth } from '@/theme/dimension'
+import { DateTime } from 'luxon'
 
 const TranslateXThreshhold = -ScreenWidth * 0.3
 
@@ -25,11 +26,13 @@ export const Reminder = ({
   frequency,
   interval,
   type,
-  plant,
-  plantId,
+  id,
+  image,
+  name,
+  nextReminder,
   onRemove,
   simultaneousHandlers
-}: FullReminder & {
+}: ReminderType & {
   onRemove: (id: string) => void
 } & Pick<PanGestureHandlerProps, 'simultaneousHandlers'>) => {
   const translateX = useSharedValue(0)
@@ -44,7 +47,7 @@ export const Reminder = ({
 
       if (shouldDelete) {
         translateX.value = withTiming(-ScreenWidth, undefined, (isFinished) => {
-          if (isFinished) runOnJS(onRemove)(plantId)
+          if (isFinished) runOnJS(onRemove)(id)
         })
         opacity.value = withTiming(0)
       } else translateX.value = withTiming(0)
@@ -94,17 +97,19 @@ export const Reminder = ({
                 justifyContent: 'space-between'
               }}>
               <Image
-                source={{ uri: plant.image }}
+                source={{ uri: image }}
                 style={{ borderRadius: 8, width: 54, height: 72 }}
                 resizeMode="contain"
               />
-              <Text style={{ fontFamily: fonts.rubik400, fontSize: 16 }}>{plant.name}</Text>
+              <Text style={{ fontFamily: fonts.rubik400, fontSize: 16 }}>{name}</Text>
             </View>
           </View>
           <View style={{ alignItems: 'flex-end' }}>
             {type == 'water' ? <Water /> : <Fertilize />}
             <Text>{getRecurrence({ frequency, interval })}</Text>
-            <Text style={{ fontFamily: fonts.rubik400, fontSize: 16 }}>{frequency}</Text>
+            <Text style={{ fontFamily: fonts.rubik400, fontSize: 16 }}>
+              {nextReminder.toRelative()}
+            </Text>
           </View>
         </Animated.View>
       </PanGestureHandler>

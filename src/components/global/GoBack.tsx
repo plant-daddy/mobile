@@ -1,12 +1,12 @@
 import { GoBackSVG } from '@/assets/svg/goBack'
 import { router } from 'expo-router'
-import { TouchableOpacity } from 'react-native'
+import { Pressable } from 'react-native'
 
 export const GoBack = () => (
-  <TouchableOpacity
+  <Pressable
     onPress={() => {
       router.back()
     }}>
     <GoBackSVG />
-  </TouchableOpacity>
+  </Pressable>
 )

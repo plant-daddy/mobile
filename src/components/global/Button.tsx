@@ -1,12 +1,12 @@
 import { colors } from '@/theme'
 import React from 'react'
 import {
-  TouchableHighlight,
   Text,
   type TouchableHighlightProps,
   StyleSheet,
   type TextStyle,
-  type StyleProp
+  type StyleProp,
+  Pressable
 } from 'react-native'
 
 type ButtonProps = TouchableHighlightProps & {
@@ -18,10 +18,9 @@ type ButtonProps = TouchableHighlightProps & {
 const style = StyleSheet.create({
   button: {
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  primary: {
-    backgroundColor: colors.green.light
+    justifyContent: 'center',
+    borderRadius: 4,
+    padding: 16
   },
   primaryText: {
     color: colors.white.primary
@@ -33,9 +32,15 @@ const style = StyleSheet.create({
 })
 
 export const Button = ({ children, primary, textStyle, ...rest }: ButtonProps) => (
-  <TouchableHighlight
+  <Pressable
     {...rest}
-    style={[style.button, { ...(primary && style.primary), ...(rest.style as Object) }]}>
-    <Text style={[style.primaryText]}>{children}</Text>
-  </TouchableHighlight>
+    style={({ pressed }) => [
+      style.button,
+      {
+        ...(primary && { backgroundColor: colors.green[pressed ? 'dark' : 'light'] }),
+        ...(rest.style as Object)
+      }
+    ]}>
+    <Text style={{ ...(primary && style.primaryText) }}>{children}</Text>
+  </Pressable>
 )

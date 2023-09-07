@@ -4,7 +4,7 @@ import {
   type TouchableHighlightProps,
   type TextStyle,
   type StyleProp,
-  TouchableOpacity
+  Pressable
 } from 'react-native'
 import { type SvgProps } from 'react-native-svg'
 
@@ -26,7 +26,7 @@ export const CheckableButton = ({
   onToggle,
   ...rest
 }: ButtonProps) => (
-  <TouchableOpacity
+  <Pressable
     {...rest}
     style={{
       alignItems: 'center',
@@ -44,5 +44,5 @@ export const CheckableButton = ({
     }}>
     {Icon && <Icon style={{ marginRight: 4 }} />}
     <Text style={textStyle}>{children}</Text>
-  </TouchableOpacity>
+  </Pressable>
 )

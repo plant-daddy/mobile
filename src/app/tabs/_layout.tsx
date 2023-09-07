@@ -3,7 +3,6 @@ import { ScreenHeight } from '@/theme/dimension'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Tabs } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function TabsLayout() {
   return (
@@ -43,32 +42,9 @@ export default function TabsLayout() {
           name="new-plant"
           options={{
             href: '/tabs/new-plant',
-            title: '',
-            tabBarIcon: () => (
-              <TouchableOpacity
-                style={{
-                  width: 60,
-                  height: 60,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  top: -25,
-                  backgroundColor: colors.green.light,
-                  borderRadius: 30,
-                  borderWidth: 3,
-                  borderColor: colors.white.primary
-                }}>
-                <MaterialIcons name="add" size={30} color={colors.white.primary} />
-              </TouchableOpacity>
-            )
-          }}
-        />
-        <Tabs.Screen
-          name="profile"
-          options={{
-            href: '/tabs/profile',
-            title: 'Profile',
+            title: 'Add Plant',
             tabBarIcon: ({ size, color }) => (
-              <MaterialIcons name="person" size={size} color={color} />
+              <MaterialIcons name="local-florist" size={size} color={color} />
             )
           }}
         />

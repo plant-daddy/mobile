@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 
 import { Rubik_300Light, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik'
 import { Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito'
-import { colors } from '@/theme'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 // import { AuthProvider } from '@/contexts/auth'
 

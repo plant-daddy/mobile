@@ -59,6 +59,7 @@ export default function Home() {
         title="MY PLANTS"
         style={{ paddingTop: 48 }}
         canAddPlant
+        count
       />
       <GestureDetector gesture={gesture}>
         <Animated.View

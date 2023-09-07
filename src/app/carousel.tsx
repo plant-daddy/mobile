@@ -3,7 +3,7 @@ import { colors } from '@/theme'
 import { ScreenHeight, WindowWidth } from '@/theme/dimension'
 import { Link, router } from 'expo-router'
 import { useRef, useState } from 'react'
-import { Image, TouchableOpacity, View } from 'react-native'
+import { Image, Pressable, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 const items = [
@@ -145,9 +145,9 @@ export default function Carousel() {
         </Button>
 
         <Link href="/auth/signin" asChild>
-          <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 24 }}>
+          <Pressable style={{ alignSelf: 'flex-end', marginBottom: 24 }}>
             <Text>Skip</Text>
-          </TouchableOpacity>
+          </Pressable>
         </Link>
       </View>
     </View>

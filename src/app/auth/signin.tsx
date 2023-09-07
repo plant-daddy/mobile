@@ -2,8 +2,7 @@ import { Button, Input, Text, Title } from '@/components/global'
 // import { useAuth } from '@/contexts/auth'
 import { ScreenHeight, ScreenWidth } from '@/theme/dimension'
 import { Link, useNavigation } from 'expo-router'
-import { Image, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Image, View, Pressable } from 'react-native'
 
 export default function SignIn() {
   // const { signIn } = useAuth()
@@ -23,19 +22,17 @@ export default function SignIn() {
         resizeMode="contain"
       />
       <View style={{ width: ScreenWidth - 64, gap: 12 }}>
-        <Title>Login</Title>
-        <Input placeholder="Email" style={{ padding: 8 }} />
-        <Input secureTextEntry placeholder="Password" style={{ padding: 8 }} />
+        <Title style={{ marginVertical: 8 }}>Login</Title>
+        <Input placeholder="Email" />
+        <Input secureTextEntry placeholder="Password" />
         <Link href="/tabs" asChild>
-          <Button primary style={{ borderRadius: 4, padding: 16 }}>
-            Login
-          </Button>
+          <Button primary>Login</Button>
         </Link>
 
         <Link href="/auth/signup" asChild>
-          <TouchableOpacity style={{ alignSelf: 'center' }}>
+          <Pressable style={{ alignSelf: 'center' }}>
             <Text>Sign up</Text>
-          </TouchableOpacity>
+          </Pressable>
         </Link>
       </View>
     </View>

@@ -9,7 +9,9 @@ export const colors = {
     light: '#FFFFFF'
   },
   gray: {
-    primary: '#D0E1DD'
+    primary: '#D0E1DD',
+    backdrop: '#171923',
+    mid: '#718096'
   },
   red: {
     primary: '#E83F5B'

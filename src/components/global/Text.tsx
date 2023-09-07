@@ -12,9 +12,7 @@ const style = StyleSheet.create({
     fontFamily: fonts.rubik300,
     color: colors.green.dark,
     fontSize: 14,
-    textAlign: 'justify',
-    margin: 10,
-    marginBottom: 2
+    textAlign: 'justify'
   }
 })
 

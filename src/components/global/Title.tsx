@@ -12,8 +12,7 @@ export const style = StyleSheet.create({
     fontFamily: fonts.rubik700,
     color: colors.green.dark,
     fontSize: 24,
-    textAlign: 'center',
-    margin: 10
+    textAlign: 'center'
   }
 })
 
