@@ -1,13 +1,16 @@
-import { type DateTime } from 'luxon'
+const type = <const>['water', 'fertilize']
+const frequency = <const>['hourly', 'daily', 'weekly', 'monthly', 'yearly']
 
-export type Frequency = 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly'
+export type Frequency = (typeof frequency)[number]
 
 export interface Reminder {
-  id: string
+  notificationId: string
   name: string
   image: string
   frequency: Frequency
   interval: number
-  type: 'water' | 'fertilize'
-  nextReminder: DateTime
+  type: (typeof type)[number]
+  nextReminder: string
 }
+
+export { type as reminderTypeReadonly, frequency as reminderFrequencyReadonly }

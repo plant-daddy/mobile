@@ -1,6 +1,6 @@
 import { type Reminder as ReminderType } from '@/utils/reminders'
 import { Image, View } from 'react-native'
-import { Text } from '../global'
+import { Button, Modal, Text, Title } from '../global'
 import { Fertilize, Water } from '@/assets/svg'
 import { colors, fonts } from '@/theme'
 import { getRecurrence } from '@/utils/rrule'
@@ -19,6 +19,7 @@ import Animated, {
 import { MaterialIcons } from '@expo/vector-icons'
 import { ScreenWidth } from '@/theme/dimension'
 import { DateTime } from 'luxon'
+import { useModal } from '@/hooks'
 
 const TranslateXThreshhold = -ScreenWidth * 0.3
 
@@ -26,7 +27,7 @@ export const Reminder = ({
   frequency,
   interval,
   type,
-  id,
+  notificationId,
   image,
   name,
   nextReminder,
@@ -35,8 +36,14 @@ export const Reminder = ({
 }: ReminderType & {
   onRemove: (id: string) => void
 } & Pick<PanGestureHandlerProps, 'simultaneousHandlers'>) => {
+  const { isOpen, onClose, onOpen } = useModal()
+
   const translateX = useSharedValue(0)
   const opacity = useSharedValue(1)
+
+  const cancel = () => {
+    translateX.value = withTiming(0)
+  }
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
     onActive: (event) => {
@@ -45,12 +52,8 @@ export const Reminder = ({
     onEnd: () => {
       const shouldDelete = translateX.value < TranslateXThreshhold
 
-      if (shouldDelete) {
-        translateX.value = withTiming(-ScreenWidth, undefined, (isFinished) => {
-          if (isFinished) runOnJS(onRemove)(id)
-        })
-        opacity.value = withTiming(0)
-      } else translateX.value = withTiming(0)
+      if (shouldDelete) runOnJS(onOpen)()
+      else runOnJS(cancel)()
     }
   })
 
@@ -86,33 +89,66 @@ export const Reminder = ({
               justifyContent: 'space-between',
               padding: 8,
               borderRadius: 12,
-              backgroundColor: colors.labels[type].backgroundColor
+              backgroundColor: colors.labels[type].backgroundColor,
+              flexWrap: 'wrap'
             },
             rStyle
           ]}>
-          <View>
-            <View
+          <View
+            style={{
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              maxWidth: '50%',
+              gap: 8
+            }}>
+            <Image source={{ uri: image }} style={{ borderRadius: 8, width: 54, height: 72 }} />
+            <Text
               style={{
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                fontFamily: fonts.rubik400,
+                fontSize: 16,
+                textAlign: 'left'
               }}>
-              <Image
-                source={{ uri: image }}
-                style={{ borderRadius: 8, width: 54, height: 72 }}
-                resizeMode="contain"
-              />
-              <Text style={{ fontFamily: fonts.rubik400, fontSize: 16 }}>{name}</Text>
-            </View>
+              {name}
+            </Text>
           </View>
           <View style={{ alignItems: 'flex-end' }}>
             {type == 'water' ? <Water /> : <Fertilize />}
             <Text>{getRecurrence({ frequency, interval })}</Text>
             <Text style={{ fontFamily: fonts.rubik400, fontSize: 16 }}>
-              {nextReminder.toRelative()}
+              {DateTime.fromISO(nextReminder).toRelative()}
             </Text>
           </View>
         </Animated.View>
       </PanGestureHandler>
+      <Modal
+        isVisible={isOpen}
+        onBackdropPress={onClose}
+        style={{ alignItems: 'center', height: '40%' }}>
+        <Title>Are you sure?</Title>
+        <Text>Are you sure you want to remove this notification?</Text>
+
+        <Button
+          style={{ backgroundColor: colors.gray.mid, marginVertical: 16 }}
+          textStyle={{ color: colors.white.primary }}
+          onPress={() => {
+            onClose()
+            cancel()
+          }}>
+          No
+        </Button>
+        <Button
+          style={{ backgroundColor: colors.red.primary }}
+          textStyle={{ color: colors.white.primary }}
+          onPress={() => {
+            onClose()
+            translateX.value = withTiming(-ScreenWidth, undefined, (isFinished) => {
+              if (isFinished) runOnJS(onRemove)(notificationId)
+            })
+            opacity.value = withTiming(0)
+          }}>
+          Yes
+        </Button>
+      </Modal>
     </View>
   )
 }

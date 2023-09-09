@@ -1,7 +1,9 @@
+import { Button } from '@/components/global'
 import { Plant } from '@/components/plants'
 import { useUserPlant } from '@/hooks'
-import { useLocalSearchParams } from 'expo-router'
-import { View } from 'react-native'
+import { HorizontalInset, VerticalInset } from '@/theme/dimension'
+import { Link, useLocalSearchParams } from 'expo-router'
+import { ScrollView } from 'react-native'
 
 export default function PlantDetails() {
   const { plant } = useLocalSearchParams()
@@ -11,8 +13,17 @@ export default function PlantDetails() {
   if (!data) return <></>
 
   return (
-    <View>
+    <ScrollView
+      contentContainerStyle={{
+        marginHorizontal: HorizontalInset,
+        paddingVertical: VerticalInset
+      }}>
       <Plant {...data} name={data.name} />
-    </View>
+      <Link asChild href={`/add-reminder?name=${data.name}&image=${data.image}`}>
+        <Button primary style={{ marginTop: 16 }}>
+          Add reminder
+        </Button>
+      </Link>
+    </ScrollView>
   )
 }

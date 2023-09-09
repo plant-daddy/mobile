@@ -4,80 +4,32 @@ import { Reminder } from '@/components/reminders'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
 import { MaterialIcons } from '@expo/vector-icons'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { View } from 'react-native'
 import { type Reminder as ReminderType } from '@/utils/reminders'
 import { ScrollView } from 'react-native-gesture-handler'
-import { DateTime } from 'luxon'
-
-const notifications: ReminderType[] = [
-  {
-    id: '1',
-    nextReminder: DateTime.now().plus({ days: 4 }),
-    frequency: 'weekly',
-    type: 'water',
-    interval: 2,
-    name: 'plant1',
-    image:
-      'https://multimidia.gazetadopovo.com.br/media/info/2017/201710/plantas-problemas-saudavel.png'
-  },
-  {
-    id: '2',
-    nextReminder: DateTime.now().plus({ minutes: 5 }),
-    frequency: 'monthly',
-    type: 'fertilize',
-    interval: 4,
-    name: 'plant 2',
-    image:
-      'https://multimidia.gazetadopovo.com.br/media/info/2017/201710/plantas-problemas-saudavel.png'
-  },
-  {
-    id: '6',
-    nextReminder: DateTime.now().plus({ hours: 3 }),
-    frequency: 'weekly',
-    type: 'water',
-    interval: 2,
-    name: 'plant1',
-    image:
-      'https://multimidia.gazetadopovo.com.br/media/info/2017/201710/plantas-problemas-saudavel.png'
-  },
-  {
-    id: '3',
-    nextReminder: DateTime.now().plus({ hours: 3 }),
-    frequency: 'monthly',
-    type: 'fertilize',
-    interval: 4,
-    name: 'plant 2',
-    image:
-      'https://multimidia.gazetadopovo.com.br/media/info/2017/201710/plantas-problemas-saudavel.png'
-  },
-  {
-    id: '4',
-    nextReminder: DateTime.now().plus({ hours: 3 }),
-    frequency: 'weekly',
-    type: 'water',
-    interval: 2,
-    name: 'plant1',
-    image:
-      'https://multimidia.gazetadopovo.com.br/media/info/2017/201710/plantas-problemas-saudavel.png'
-  },
-  {
-    id: '5',
-    nextReminder: DateTime.now().plus({ hours: 3 }),
-    frequency: 'monthly',
-    type: 'fertilize',
-    interval: 4,
-    name: 'plant 2',
-    image:
-      'https://multimidia.gazetadopovo.com.br/media/info/2017/201710/plantas-problemas-saudavel.png'
-  }
-]
+import notifee from '@notifee/react-native'
 
 export default function Notifications() {
   const [waterChecked, setWaterChecked] = useState(true)
   const [fertilizeChecked, setFertilizeChecked] = useState(true)
 
-  const [reminders, setReminders] = useState(notifications)
+  const [reminders, setReminders] = useState<ReminderType[]>([])
+
+  useEffect(() => {
+    const load = async () => {
+      const res = await notifee.getTriggerNotifications()
+      return res.map((r) => r.notification.data) as unknown as ReminderType[]
+    }
+
+    load()
+      .then((res) => {
+        setReminders(res)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [])
 
   const waterReminders = useMemo(() => reminders.filter((r) => r.type === 'water'), [reminders])
 
@@ -88,8 +40,9 @@ export default function Notifications() {
 
   const scrollRef = useRef(null)
 
-  const remove = useCallback((plantId: string) => {
-    setReminders((reminders) => reminders.filter((r) => r.id !== plantId))
+  const remove = useCallback(async (notificationId: string) => {
+    await notifee.cancelTriggerNotification(notificationId)
+    setReminders((reminders) => reminders.filter((r) => r.notificationId !== notificationId))
   }, [])
 
   return (
@@ -126,7 +79,7 @@ export default function Notifications() {
             <Reminder
               {...reminder}
               onRemove={remove}
-              key={reminder.id}
+              key={reminder.notificationId}
               simultaneousHandlers={scrollRef}
             />
           ))}
@@ -135,7 +88,7 @@ export default function Notifications() {
             <Reminder
               {...reminder}
               onRemove={remove}
-              key={reminder.id}
+              key={reminder.notificationId}
               simultaneousHandlers={scrollRef}
             />
           ))}

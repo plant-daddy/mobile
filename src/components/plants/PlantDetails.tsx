@@ -2,7 +2,6 @@
 import { Image, ScrollView, View } from 'react-native'
 import { GoBack, Text, Title } from '../global'
 import { type Plant as PlantType, getPlantFirstName, getPlanInfo } from '@/utils/plant'
-import { HorizontalInset, VerticalInset } from '@/theme/dimension'
 import { fonts } from '@/theme'
 
 export const Plant = ({
@@ -17,9 +16,7 @@ export const Plant = ({
   return (
     <ScrollView
       contentContainerStyle={{
-        alignItems: 'flex-start',
-        marginHorizontal: HorizontalInset,
-        paddingVertical: VerticalInset
+        alignItems: 'flex-start'
       }}>
       <GoBack />
       <Title style={{ marginTop: 16 }}>{name ?? getPlantFirstName(commonName)}</Title>

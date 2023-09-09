@@ -1,7 +1,7 @@
 import { RRule } from 'rrule'
 import { type Frequency } from './reminders'
 
-const getFrequency = (frequency: Frequency) => {
+export const getFrequency = (frequency: Frequency) => {
   switch (frequency) {
     case 'hourly':
       return RRule.HOURLY

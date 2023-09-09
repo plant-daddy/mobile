@@ -14,12 +14,13 @@ type ButtonProps = TouchableHighlightProps & {
   primary?: boolean
 }
 
-export const Button = ({ children, primary, textStyle, ...rest }: ButtonProps) => (
+export const Button = ({ children, primary, textStyle, disabled, ...rest }: ButtonProps) => (
   <Pressable
     {...rest}
+    disabled={disabled}
     style={({ pressed }) => [
       {
-        opacity: pressed ? 0.8 : 1,
+        opacity: disabled ? 0.5 : pressed ? 0.8 : 1,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 4,

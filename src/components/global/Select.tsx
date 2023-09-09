@@ -32,6 +32,7 @@ export const Select = ({
   renderItem,
   inputLabel,
   onSelect: onSelectProp,
+  label,
   ...rest
 }: {
   value: any
@@ -42,6 +43,7 @@ export const Select = ({
   placeholder?: string
   searchableProps?: '*' | string[]
   inputLabel?: string
+  label?: string
 } & ViewProps &
   Pick<FlatListProps<any>, 'renderItem'>) => {
   const { isOpen, onOpen, onClose } = useModal()
@@ -85,21 +87,34 @@ export const Select = ({
 
   return (
     <>
-      <Pressable
-        style={{ borderColor: colors.green.light, borderWidth: 1, borderRadius: 4, padding: 16 }}
-        onPress={() => {
-          onOpen()
-        }}>
-        <Text style={{ color: selectedValue ? colors.green.dark : colors.gray.mid }}>
-          {selectedValue ? selectedValueLabel : placeholder}
-        </Text>
-      </Pressable>
+      <View>
+        {label && (
+          <Text
+            style={{
+              fontFamily: fonts.rubik400,
+              fontSize: 18,
+              color: colors.green.dark,
+              marginBottom: 8
+            }}>
+            {label}
+          </Text>
+        )}
+        <Pressable
+          style={{ borderColor: colors.green.light, borderWidth: 1, borderRadius: 4, padding: 16 }}
+          onPress={() => {
+            onOpen()
+          }}>
+          <Text style={{ color: selectedValue ? colors.green.dark : colors.gray.mid }}>
+            {selectedValue ? selectedValueLabel : placeholder}
+          </Text>
+        </Pressable>
+      </View>
       <Modal
         isVisible={isOpen}
         onBackdropPress={onClose}
         animationIn="slideInUp"
         hideModalContentWhileAnimating
-        style={{ height: '80%', paddingHorizontal: HorizontalInset }}>
+        style={[{ height: '80%', paddingHorizontal: HorizontalInset }, rest.style]}>
         {isSearchable && (
           <>
             <Input
@@ -113,7 +128,7 @@ export const Select = ({
               }}
               value={searchTerm}
             />
-            {inputLabel && <Text style={{ fontSize: 12 }}>{inputLabel}</Text>}
+            {inputLabel && <Text style={{ fontSize: 12, marginVertical: 8 }}>{inputLabel}</Text>}
           </>
         )}
         <View style={{ flex: 1 }}>
