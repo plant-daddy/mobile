@@ -125,11 +125,11 @@ export const Reminder = ({
         onBackdropPress={onClose}
         style={{ alignItems: 'center', height: '40%' }}>
         <Title>Are you sure?</Title>
-        <Text>Are you sure you want to remove this notification?</Text>
+        <Text>Are you sure you want to remove this reminder?</Text>
 
         <Button
-          style={{ backgroundColor: colors.gray.mid, marginVertical: 16 }}
-          textStyle={{ color: colors.white.primary }}
+          style={{ backgroundColor: colors.gray.primary, marginVertical: 16 }}
+          textStyle={{ color: colors.gray.backdrop }}
           onPress={() => {
             onClose()
             cancel()

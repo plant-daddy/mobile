@@ -10,19 +10,21 @@ import { type Reminder as ReminderType } from '@/utils/reminders'
 import { ScrollView } from 'react-native-gesture-handler'
 import notifee from '@notifee/react-native'
 
+const loadNotifications = async () => {
+  const res = await notifee.getTriggerNotifications()
+  return res.map((r) => r.notification.data) as unknown as ReminderType[]
+}
+
 export default function Notifications() {
   const [waterChecked, setWaterChecked] = useState(true)
   const [fertilizeChecked, setFertilizeChecked] = useState(true)
 
+  // const [refresh, setRefresh] = useState(false)
+
   const [reminders, setReminders] = useState<ReminderType[]>([])
 
   useEffect(() => {
-    const load = async () => {
-      const res = await notifee.getTriggerNotifications()
-      return res.map((r) => r.notification.data) as unknown as ReminderType[]
-    }
-
-    load()
+    loadNotifications()
       .then((res) => {
         setReminders(res)
       })
@@ -45,9 +47,29 @@ export default function Notifications() {
     setReminders((reminders) => reminders.filter((r) => r.notificationId !== notificationId))
   }, [])
 
+  // const onRefresh = () => {
+  //   setRefresh(true)
+
+  //   loadNotifications()
+  //     .then((res) => {
+  //       setReminders(res)
+  //       setRefresh(false)
+  //     })
+  //     .catch((err) => {
+  //       console.error(err)
+  //     })
+  // }
+
   return (
     <View
-      style={{ paddingHorizontal: HorizontalInset, paddingTop: VerticalInset, marginBottom: 128 }}>
+      // refreshControl={
+      //   <RefreshControl refreshing={refresh} onRefresh={onRefresh} style={{ paddingTop: 24 }} />
+      // }
+      style={{
+        paddingHorizontal: HorizontalInset,
+        paddingTop: VerticalInset,
+        marginBottom: 128
+      }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <Title>MY REMINDERS</Title>
         <MaterialIcons name="search" size={20} color={colors.green.dark} />

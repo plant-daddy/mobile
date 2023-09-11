@@ -3,6 +3,8 @@ import { type Frequency } from './reminders'
 
 export const getFrequency = (frequency: Frequency) => {
   switch (frequency) {
+    case 'every minute':
+      return RRule.MINUTELY
     case 'hourly':
       return RRule.HOURLY
     case 'daily':
@@ -10,9 +12,9 @@ export const getFrequency = (frequency: Frequency) => {
     case 'weekly':
       return RRule.WEEKLY
     case 'monthly':
-      return RRule.DAILY
+      return RRule.MONTHLY
     case 'yearly':
-      return RRule.WEEKLY
+      return RRule.YEARLY
   }
 }
 

@@ -1,5 +1,5 @@
 const type = <const>['water', 'fertilize']
-const frequency = <const>['hourly', 'daily', 'weekly', 'monthly', 'yearly']
+const frequency = <const>['every minute', 'hourly', 'daily', 'weekly', 'monthly', 'yearly']
 
 export type Frequency = (typeof frequency)[number]
 

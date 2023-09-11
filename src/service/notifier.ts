@@ -1,6 +1,10 @@
 import { type ReminderSchema } from '@/app/(private)/add-reminder'
 import { getFrequency } from '@/utils/rrule'
-import notifee, { type TimestampTrigger, TriggerType } from '@notifee/react-native'
+import notifee, {
+  TriggerType,
+  AndroidImportance,
+  type TimestampTrigger
+} from '@notifee/react-native'
 import { DateTime } from 'luxon'
 import { RRule } from 'rrule'
 import uuid from 'react-native-uuid'
@@ -17,10 +21,20 @@ export const createNotificationChannel = async () => {
 export const scheduleReminder = async (data: ReminderSchema) => {
   const channel = await createNotificationChannel()
 
+  const { year, month, day } = DateTime.fromJSDate(data.date)
+  const { hour, minute } = DateTime.fromJSDate(data.time)
+  const startTime = DateTime.fromObject({
+    year,
+    month,
+    day,
+    hour,
+    minute
+  })
+
   const nextReminder = new RRule({
     freq: getFrequency(data.frequency),
     interval: +data.interval,
-    dtstart: DateTime.now().toJSDate(),
+    dtstart: startTime.toJSDate(),
     count: 2
   }).all()[1]
 
@@ -38,7 +52,9 @@ export const scheduleReminder = async (data: ReminderSchema) => {
         body: `It's time to take care of ${data.name}`,
         android: {
           channelId: channel,
-          showTimestamp: true
+          showTimestamp: true,
+          importance: AndroidImportance.HIGH,
+          sound: 'default'
         },
         id,
         data: {

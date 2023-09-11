@@ -44,6 +44,7 @@ export const Select = ({
   searchableProps?: '*' | string[]
   inputLabel?: string
   label?: string
+  inputStyle?: ViewProps['style']
 } & ViewProps &
   Pick<FlatListProps<any>, 'renderItem'>) => {
   const { isOpen, onOpen, onClose } = useModal()
@@ -87,7 +88,7 @@ export const Select = ({
 
   return (
     <>
-      <View>
+      <View style={rest.inputStyle}>
         {label && (
           <Text
             style={{
@@ -100,13 +101,22 @@ export const Select = ({
           </Text>
         )}
         <Pressable
-          style={{ borderColor: colors.green.light, borderWidth: 1, borderRadius: 4, padding: 16 }}
+          style={{
+            borderColor: colors.green.light,
+            borderWidth: 1,
+            borderRadius: 4,
+            padding: 16,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
           onPress={() => {
             onOpen()
           }}>
           <Text style={{ color: selectedValue ? colors.green.dark : colors.gray.mid }}>
             {selectedValue ? selectedValueLabel : placeholder}
           </Text>
+          <MaterialIcons name="keyboard-arrow-down" color={colors.gray.mid} size={16} />
         </Pressable>
       </View>
       <Modal

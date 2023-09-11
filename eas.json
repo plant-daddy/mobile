@@ -10,7 +10,7 @@
         "gradleCommand": ":app:assembleDebug"
       }
     },
-    "preview": {
+    "staging": {
       "distribution": "internal"
     },
     "production": {}

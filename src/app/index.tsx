@@ -1,10 +1,26 @@
 import { Button, Text, Title } from '@/components/global'
+import { scheduleReminder } from '@/service/notifier'
 import { colors } from '@/theme'
 import { ScreenHeight, WindowWidth } from '@/theme/dimension'
+import { type Reminder } from '@/utils/reminders'
+import notifee, { EventType } from '@notifee/react-native'
 import { Link, router } from 'expo-router'
+import { DateTime } from 'luxon'
 import { useRef, useState } from 'react'
 import { Image, Pressable, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
+
+notifee.onBackgroundEvent(async ({ detail, type }) => {
+  if (type === EventType.DELIVERED) {
+    const data = detail.notification?.data as unknown as Reminder
+    await scheduleReminder({
+      ...data,
+      date: DateTime.fromISO(data.nextReminder).toJSDate(),
+      time: DateTime.fromISO(data.nextReminder).toJSDate(),
+      interval: data.interval.toString()
+    })
+  }
+})
 
 const items = [
   {
