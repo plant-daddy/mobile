@@ -22,32 +22,45 @@ import { DateTime } from 'luxon'
 const reminderType = ['water', 'fertilize']
 const reminderFrequency = ['every minute', 'hourly', 'daily', 'weekly', 'monthly', 'yearly']
 
-const validationSchema = z.object({
-  image: z.string(),
-  name: z.string(),
-  frequency: z.enum(reminderFrequencyReadonly),
-  interval: z.string().refine((value) => +value >= 1, {
-    message: 'Interval cannot be smaller than 1'
-  }),
-  type: z.enum(reminderTypeReadonly),
-  date: z
-    .date()
-    .refine(
-      (value) =>
-        DateTime.fromJSDate(value)
-          .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
-          .toMillis() >=
-        DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toMillis(),
-      {
-        message: "Can't choose a date in the past"
-      }
-    ),
-  time: z
-    .date()
-    .refine((value) => DateTime.fromJSDate(value).toMillis() > DateTime.now().toMillis(), {
-      message: "Can't choose a time in the past"
-    })
-})
+const validationSchema = z
+  .object({
+    image: z.string(),
+    name: z.string(),
+    frequency: z.enum(reminderFrequencyReadonly),
+    interval: z.string().refine((value) => +value >= 1, {
+      message: 'Interval cannot be smaller than 1'
+    }),
+    type: z.enum(reminderTypeReadonly),
+    date: z
+      .date()
+      .refine(
+        (value) =>
+          DateTime.fromJSDate(value)
+            .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+            .toMillis() >=
+          DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toMillis(),
+        {
+          message: "Can't choose a date in the past"
+        }
+      ),
+    time: z.date()
+  })
+  .refine(
+    ({ date, time }) => {
+      const { year, month, day } = DateTime.fromJSDate(date)
+      const { hour, minute } = DateTime.fromJSDate(time)
+      const chosenTime = DateTime.fromObject({
+        year,
+        month,
+        day,
+        hour,
+        minute
+      })
+
+      return chosenTime.toMillis() >= DateTime.now().toMillis()
+    },
+    { message: "Can't choose a date in the past", path: ['time'] }
+  )
 
 export type ReminderSchema = z.infer<typeof validationSchema>
 

@@ -7,13 +7,15 @@ import { Link } from 'expo-router'
 export const PlantsList = ({
   plants,
   textColor,
-  isUserPlant
+  isUserPlant,
+  disabled
 }: {
   plants: Plant[]
   textColor?: string
   isUserPlant?: boolean
+  disabled?: boolean
 }) => (
-  <ScrollView style={{ marginBottom: 64 }}>
+  <ScrollView style={{ marginBottom: 64 }} scrollEnabled={!disabled}>
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
       {plants.map((plant) => (
         <Link

@@ -14,6 +14,7 @@ export const ListView = ({
   count,
   plants,
   isUserPlant,
+  disabled,
   ...rest
 }: {
   title: string
@@ -22,6 +23,7 @@ export const ListView = ({
   count?: boolean
   plants: Plant[]
   isUserPlant?: boolean
+  disabled?: boolean
 } & ViewProps) => (
   <View
     style={[
@@ -49,7 +51,16 @@ export const ListView = ({
         )}
       </View>
     </View>
-    {count && <Text style={{ color: colors.green.dark }}>You have {plants.length} plants!</Text>}
-    <PlantsList textColor={textColor} plants={plants} isUserPlant={isUserPlant} />
+    {count && (
+      <Text style={{ color: colors.green.dark, marginBottom: 4 }}>
+        You have {plants.length} plants!
+      </Text>
+    )}
+    <PlantsList
+      textColor={textColor}
+      plants={plants}
+      isUserPlant={isUserPlant}
+      disabled={disabled}
+    />
   </View>
 )

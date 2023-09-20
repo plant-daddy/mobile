@@ -2,12 +2,13 @@ import { ListView } from '@/components/plants'
 import { usePlants, useUserPlants } from '@/hooks'
 import { colors } from '@/theme'
 import { ScreenHeight, ScreenWidth } from '@/theme/dimension'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
   Extrapolate,
   interpolate,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withSpring
@@ -18,6 +19,8 @@ const MaxTranslateY = -ScreenHeight + 50
 export default function Home() {
   const { data: plants } = usePlants()
   const { data: userPlants } = useUserPlants()
+
+  const [isBottomSheetUp, setIsBottomSheetUp] = useState(false)
 
   const translateY = useSharedValue(0)
   const context = useSharedValue({ y: 0 })
@@ -36,8 +39,13 @@ export default function Home() {
       translateY.value = Math.max(translateY.value, MaxTranslateY)
     })
     .onEnd(() => {
-      if (translateY.value > -ScreenHeight / 3) scrollTo(-ScreenHeight / 2.5)
-      else scrollTo(MaxTranslateY)
+      if (translateY.value > -ScreenHeight / 3) {
+        scrollTo(-ScreenHeight / 2.5)
+        runOnJS(setIsBottomSheetUp)(false)
+      } else {
+        scrollTo(MaxTranslateY)
+        runOnJS(setIsBottomSheetUp)(true)
+      }
     })
 
   const bottomSheetStyle = useAnimatedStyle(() => {
@@ -95,6 +103,7 @@ export default function Home() {
             title="ALL PLANTS"
             style={{ marginBottom: 200 }}
             plants={plants ?? []}
+            disabled={!isBottomSheetUp}
           />
         </Animated.View>
       </GestureDetector>

@@ -122,7 +122,10 @@ export const Reminder = ({
       </PanGestureHandler>
       <Modal
         isVisible={isOpen}
-        onBackdropPress={onClose}
+        onBackdropPress={() => {
+          onClose()
+          cancel()
+        }}
         style={{ alignItems: 'center', height: '40%' }}>
         <Title>Are you sure?</Title>
         <Text>Are you sure you want to remove this reminder?</Text>

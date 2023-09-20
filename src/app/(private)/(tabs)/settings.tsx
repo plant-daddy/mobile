@@ -1,8 +1,9 @@
-import { Button, GoBack, Text, Title } from '@/components/global'
+import { Button, GoBack, Title } from '@/components/global'
+import { SettingsItem } from '@/components/settings'
 import { useAuth } from '@/contexts/auth'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
-import { View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 
 export default function Settings() {
   const { signOut } = useAuth()
@@ -12,7 +13,8 @@ export default function Settings() {
       style={{
         paddingHorizontal: HorizontalInset,
         paddingTop: VerticalInset,
-        marginBottom: 128
+        marginBottom: 128,
+        height: '100%'
       }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <GoBack />
@@ -20,14 +22,35 @@ export default function Settings() {
         <View />
       </View>
 
-      <Button
-        style={{ backgroundColor: colors.red.primary, marginVertical: 16 }}
-        textStyle={{ color: colors.white.primary }}
-        onPress={() => {
-          signOut()
+      <ScrollView style={{ marginVertical: 32 }}>
+        <SettingsItem icon="person" text="Account" onPress={() => {}} />
+        <SettingsItem icon="help-outline" text="FAQ" onPress={() => {}} dividerTop external />
+        <SettingsItem
+          icon="auto-awesome"
+          text="Subscription"
+          onPress={() => {}}
+          dividerTop
+          external
+        />
+      </ScrollView>
+
+      <View
+        style={{
+          flexGrow: 1,
+          justifyContent: 'flex-end'
         }}>
-        Sign out
-      </Button>
+        <Button
+          style={{
+            backgroundColor: colors.red.primary,
+            marginVertical: 16
+          }}
+          textStyle={{ color: colors.white.primary }}
+          onPress={() => {
+            signOut()
+          }}>
+          Sign out
+        </Button>
+      </View>
     </View>
   )
 }

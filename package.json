@@ -9,6 +9,7 @@
     "web": "expo start --web",
     "lint": "yarn eslint --fix \"./**/*.tsx\"",
     "format": "yarn prettier --write --config .prettierrc \"./**/*.{ts,tsx,js,jsx,json,md}\"",
+    "fix": "yarn lint && yarn format",
     "typecheck": "tsc --noEmit"
   },
   "jest": {

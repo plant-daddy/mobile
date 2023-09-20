@@ -1,3 +1,5 @@
+import { startCase } from 'lodash'
+
 export const plants = [
   {
     description:
@@ -762,27 +764,20 @@ export const getPlantFirstName = (string: string) => string.split(',')[0]
 
 export function getPlanInfo(plant: Partial<Plant>): {
   texts: Record<string, string | undefined>
-  table: Record<string, string | undefined>
+  table: Record<string, string>
 } {
+  const { description, water, fertilizer, soil, light, temperatureAndHumidity, id, ...table } =
+    plant
+
   return {
     texts: {
-      'More about it': plant.description,
-      Water: plant.water,
-      Fertilize: plant.fertilizer,
-      Soil: plant.soil,
-      Light: plant.light,
-      'Temperature and humidity': plant.temperatureAndHumidity
+      'More about it': description,
+      Water: water,
+      Fertilize: fertilizer,
+      Soil: soil,
+      Light: light,
+      'Temperature and humidity': temperatureAndHumidity
     },
-    table: {
-      Type: plant.type,
-      'Sun exposure': plant.sunExposure,
-      'Bloom time': plant.bloomTime,
-      'Native area': plant.nativeArea,
-      'Flower color': plant.flowerColor,
-      Toxicity: plant.toxicity,
-      'Hardiness zone': plant.hardinessZones,
-      'Soil type': plant.soilType,
-      'Soil Ph': plant.soilPh
-    }
+    table: Object.fromEntries(Object.entries(table).map(([k, v]) => [startCase(k), v]))
   }
 }

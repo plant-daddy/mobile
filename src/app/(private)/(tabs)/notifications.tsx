@@ -5,7 +5,7 @@ import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { View } from 'react-native'
+import { RefreshControl, View, ScrollView as NativeScrollView } from 'react-native'
 import { type Reminder as ReminderType } from '@/utils/reminders'
 import { ScrollView } from 'react-native-gesture-handler'
 import notifee from '@notifee/react-native'
@@ -19,7 +19,7 @@ export default function Notifications() {
   const [waterChecked, setWaterChecked] = useState(true)
   const [fertilizeChecked, setFertilizeChecked] = useState(true)
 
-  // const [refresh, setRefresh] = useState(false)
+  const [refresh, setRefresh] = useState(false)
 
   const [reminders, setReminders] = useState<ReminderType[]>([])
 
@@ -47,24 +47,24 @@ export default function Notifications() {
     setReminders((reminders) => reminders.filter((r) => r.notificationId !== notificationId))
   }, [])
 
-  // const onRefresh = () => {
-  //   setRefresh(true)
+  const onRefresh = () => {
+    setRefresh(true)
 
-  //   loadNotifications()
-  //     .then((res) => {
-  //       setReminders(res)
-  //       setRefresh(false)
-  //     })
-  //     .catch((err) => {
-  //       console.error(err)
-  //     })
-  // }
+    loadNotifications()
+      .then((res) => {
+        setReminders(res)
+        setRefresh(false)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
 
   return (
-    <View
-      // refreshControl={
-      //   <RefreshControl refreshing={refresh} onRefresh={onRefresh} style={{ paddingTop: 24 }} />
-      // }
+    <NativeScrollView
+      refreshControl={
+        <RefreshControl refreshing={refresh} onRefresh={onRefresh} style={{ paddingTop: 24 }} />
+      }
       style={{
         paddingHorizontal: HorizontalInset,
         paddingTop: VerticalInset,
@@ -115,6 +115,6 @@ export default function Notifications() {
             />
           ))}
       </ScrollView>
-    </View>
+    </NativeScrollView>
   )
 }
