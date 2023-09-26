@@ -1,6 +1,6 @@
 import { colors } from '@/theme'
 import { Slot } from 'expo-router'
-import { StatusBar } from 'react-native'
+import { StatusBar, View } from 'react-native'
 
 export default function PrivateLayout() {
   return (

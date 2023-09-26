@@ -4,39 +4,22 @@ import { Reminder } from '@/components/reminders'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
 import { MaterialIcons } from '@expo/vector-icons'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { RefreshControl, View, ScrollView as NativeScrollView } from 'react-native'
-import { type Reminder as ReminderType } from '@/utils/reminders'
 import { ScrollView } from 'react-native-gesture-handler'
 import notifee from '@notifee/react-native'
-
-const loadNotifications = async () => {
-  const res = await notifee.getTriggerNotifications()
-  return res.map((r) => r.notification.data) as unknown as ReminderType[]
-}
+import { useNotifications } from '@/hooks'
 
 export default function Notifications() {
+  const { data: reminders, refetch, isRefetching } = useNotifications()
+
   const [waterChecked, setWaterChecked] = useState(true)
   const [fertilizeChecked, setFertilizeChecked] = useState(true)
 
-  const [refresh, setRefresh] = useState(false)
-
-  const [reminders, setReminders] = useState<ReminderType[]>([])
-
-  useEffect(() => {
-    loadNotifications()
-      .then((res) => {
-        setReminders(res)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [])
-
-  const waterReminders = useMemo(() => reminders.filter((r) => r.type === 'water'), [reminders])
+  const waterReminders = useMemo(() => reminders?.filter((r) => r.type === 'water'), [reminders])
 
   const fertilizeReminders = useMemo(
-    () => reminders.filter((r) => r.type === 'fertilize'),
+    () => reminders?.filter((r) => r.type === 'fertilize'),
     [reminders]
   )
 
@@ -44,26 +27,13 @@ export default function Notifications() {
 
   const remove = useCallback(async (notificationId: string) => {
     await notifee.cancelTriggerNotification(notificationId)
-    setReminders((reminders) => reminders.filter((r) => r.notificationId !== notificationId))
+    await refetch()
   }, [])
-
-  const onRefresh = () => {
-    setRefresh(true)
-
-    loadNotifications()
-      .then((res) => {
-        setReminders(res)
-        setRefresh(false)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }
 
   return (
     <NativeScrollView
       refreshControl={
-        <RefreshControl refreshing={refresh} onRefresh={onRefresh} style={{ paddingTop: 24 }} />
+        <RefreshControl refreshing={isRefetching} onRefresh={refetch} style={{ paddingTop: 24 }} />
       }
       style={{
         paddingHorizontal: HorizontalInset,
@@ -75,7 +45,7 @@ export default function Notifications() {
         <MaterialIcons name="search" size={20} color={colors.green.dark} />
       </View>
       <Text>
-        You have {reminders.length} reminder{reminders.length !== 1 && 's'}
+        You have {reminders?.length} reminder{reminders?.length !== 1 && 's'}
       </Text>
       <View style={{ flexDirection: 'row', gap: 16, marginVertical: 24 }}>
         <CheckableButton
@@ -97,7 +67,7 @@ export default function Notifications() {
       </View>
       <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
         {waterChecked &&
-          waterReminders.map((reminder) => (
+          waterReminders?.map((reminder) => (
             <Reminder
               {...reminder}
               onRemove={remove}
@@ -106,7 +76,7 @@ export default function Notifications() {
             />
           ))}
         {fertilizeChecked &&
-          fertilizeReminders.map((reminder) => (
+          fertilizeReminders?.map((reminder) => (
             <Reminder
               {...reminder}
               onRemove={remove}

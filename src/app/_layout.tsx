@@ -11,11 +11,15 @@ import notifee, { EventType } from '@notifee/react-native'
 import { type Reminder } from '@/utils/reminders'
 import { scheduleReminder } from '@/service/notifier'
 import { DateTime } from 'luxon'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { setBackgroundColorAsync } from 'expo-system-ui'
+import { colors } from '@/theme'
 
 export { ErrorBoundary } from 'expo-router'
 
 SplashScreen.preventAutoHideAsync()
+
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+setBackgroundColorAsync(colors.white.primary)
 
 const InitialLayout = () => {
   const { authenticated, loading } = useAuth()

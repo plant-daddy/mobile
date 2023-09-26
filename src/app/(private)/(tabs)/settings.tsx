@@ -3,6 +3,7 @@ import { SettingsItem } from '@/components/settings'
 import { useAuth } from '@/contexts/auth'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
+import { router } from 'expo-router'
 import { ScrollView, View } from 'react-native'
 
 export default function Settings() {
@@ -16,21 +17,27 @@ export default function Settings() {
         marginBottom: 128,
         height: '100%'
       }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <GoBack />
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <GoBack style={{ position: 'absolute', left: 1 }} />
         <Title style={{ alignSelf: 'center' }}>Settings</Title>
-        <View />
       </View>
 
       <ScrollView style={{ marginVertical: 32 }}>
-        <SettingsItem icon="person" text="Account" onPress={() => {}} />
+        <SettingsItem
+          icon="person"
+          text="Account"
+          onPress={() => {
+            router.push('/settings/account')
+          }}
+        />
         <SettingsItem icon="help-outline" text="FAQ" onPress={() => {}} dividerTop external />
         <SettingsItem
           icon="auto-awesome"
-          text="Subscription"
-          onPress={() => {}}
+          text="Plant Daddy Pro"
+          onPress={() => {
+            router.push('/settings/pro')
+          }}
           dividerTop
-          external
         />
       </ScrollView>
 

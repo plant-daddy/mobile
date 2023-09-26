@@ -149,7 +149,7 @@ export default function Carousel() {
           primary
           style={{ borderRadius: 4, padding: 16 }}
           onPress={() => {
-            if (active === 2) router.replace('/signin')
+            if (active === 2) router.push('/signin')
             else {
               scrollViewRef.current?.scrollTo({
                 x: WindowWidth * (active + 1),
