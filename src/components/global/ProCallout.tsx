@@ -1,32 +1,66 @@
-import { View } from 'react-native'
+import { Image, View } from 'react-native'
 import { Text } from './Text'
 import { Button } from './Button'
-import { HorizontalInset } from '@/theme/dimension'
-import { colors, fonts } from '@/theme'
+import { colors } from '@/theme'
 import { Link } from 'expo-router'
 
+import { Title } from './Title'
+import Modal from 'react-native-modal'
+
 const benefits = {
-  plant: 'Get Plant Daddy Pro to be able to create unlimited plants',
-  notification: 'Get Plant Daddy Pro to be able to create unlimited notifications'
+  plant: [
+    'Looks like you exceed the limit of plants you can add.',
+    'Get Plant Daddy Pro to be able to add more'
+  ],
+  notification: [
+    'Looks like you exceed the limit of notifications you can have.',
+    'Get Plant Daddy Pro to be able to have more'
+  ]
 }
 
-export const ProCallout = ({ benefit }: { benefit: keyof typeof benefits }) => (
-  <View
-    style={{
-      marginHorizontal: HorizontalInset,
-      borderWidth: 1,
-      borderRadius: 16,
-      padding: 16,
-      borderColor: colors.green.dark,
-      backgroundColor: colors.green.dark,
-      gap: 12
-    }}>
-    <Text style={{ fontSize: 16, fontFamily: fonts.rubik400, color: colors.white.primary }}>
-      Oops. Seems like you {"don't"} have Plant Daddy Pro 😥
-    </Text>
-    <Text style={{ color: colors.white.primary }}>{benefits[benefit]}</Text>
-    <Link href="/settings/pro" asChild>
-      <Button primary>Get Plant Daddy Pro</Button>
-    </Link>
-  </View>
+export const ProCallout = ({
+  benefit,
+  isVisible,
+  onClose
+}: {
+  benefit: keyof typeof benefits
+  isVisible: boolean
+  onClose: () => void
+}) => (
+  <Modal isVisible={isVisible} style={{ height: '45%' }} onBackdropPress={onClose}>
+    <View
+      style={{
+        borderRadius: 16,
+        padding: 32,
+        gap: 16,
+        backgroundColor: colors.white.primary
+      }}>
+      <View
+        style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 16 }}>
+        <Image source={require('../../assets/images/name.png')} />
+        <Text
+          style={{
+            backgroundColor: colors.green.light,
+            paddingVertical: 8,
+            paddingHorizontal: 12,
+            borderRadius: 8,
+            fontSize: 16
+          }}
+          color={colors.white.primary}>
+          Pro
+        </Text>
+      </View>
+      <View style={{ gap: 8, alignItems: 'center' }}>
+        <Title>Oops.</Title>
+        {benefits[benefit].map((b) => (
+          <Text key={b} style={{ textAlign: 'center', fontSize: 16 }}>
+            {b}
+          </Text>
+        ))}
+      </View>
+      <Link href="/settings/pro" asChild>
+        <Button primary>Buy Now</Button>
+      </Link>
+    </View>
+  </Modal>
 )

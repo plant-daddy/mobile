@@ -40,7 +40,8 @@
             "buildToolsVersion": "33.0.0"
           }
         }
-      ]
+      ],
+      "expo-image-picker"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -20,7 +20,7 @@ import { z } from 'zod'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
 import { scheduleReminder } from '@/service/notifier'
 import { DateTime } from 'luxon'
-import { useNotifications, useUser } from '@/hooks'
+import { useModal, useNotifications, useUser } from '@/hooks'
 
 const reminderType = ['water', 'fertilize']
 const reminderFrequency = ['every minute', 'hourly', 'daily', 'weekly', 'monthly', 'yearly']
@@ -77,6 +77,7 @@ export default function AddReminder() {
 
   const { data: user } = useUser()
   const { data: notifications } = useNotifications()
+  const { isOpen, onClose, onOpen } = useModal()
 
   const canCreateReminder = !!user?.pro || !!((notifications ?? []).length < 1)
 
@@ -86,21 +87,21 @@ export default function AddReminder() {
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        marginHorizontal: HorizontalInset,
-        paddingVertical: VerticalInset,
-        alignItems: 'center'
-      }}>
-      <GoBack style={{ alignSelf: 'flex-start' }} />
-      <Image
-        source={require('../../assets/images/add-reminder.png')}
-        style={{ width: ScreenWidth * 0.8 }}
-        resizeMode="contain"
-      />
-      <Title style={{ marginBottom: 24 }}>Want to set reminders for {plant.name}?</Title>
+    <>
+      <ScrollView
+        contentContainerStyle={{
+          marginHorizontal: HorizontalInset,
+          paddingVertical: VerticalInset,
+          alignItems: 'center'
+        }}>
+        <GoBack style={{ alignSelf: 'flex-start' }} />
+        <Image
+          source={require('../../assets/images/add-reminder.png')}
+          style={{ width: ScreenWidth * 0.8 }}
+          resizeMode="contain"
+        />
+        <Title style={{ marginBottom: 24 }}>Want to set reminders for {plant.name}?</Title>
 
-      {canCreateReminder ? (
         <Formik
           initialValues={{
             ...plant,
@@ -181,6 +182,10 @@ export default function AddReminder() {
               </View>
               <Button
                 onPress={() => {
+                  if (!canCreateReminder) {
+                    onOpen()
+                    return
+                  }
                   handleSubmit()
                 }}
                 primary
@@ -190,9 +195,8 @@ export default function AddReminder() {
             </View>
           )}
         </Formik>
-      ) : (
-        <ProCallout benefit="notification" />
-      )}
-    </ScrollView>
+      </ScrollView>
+      <ProCallout benefit="notification" isVisible={isOpen} onClose={onClose} />
+    </>
   )
 }

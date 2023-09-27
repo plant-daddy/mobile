@@ -2,12 +2,46 @@ import { colors, fonts } from '@/theme'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Image, Pressable, View } from 'react-native'
 import { Modal } from './Modal'
-import { useModal } from '@/hooks'
+import { useImagePicker, useModal } from '@/hooks'
 import { Title } from './Title'
 import { Text } from './Text'
+import React from 'react'
 
-export const ImagePicker = ({ defaultValue }: { defaultValue: string }) => {
+const Item = ({
+  text,
+  icon,
+  onPress
+}: {
+  text: string
+  icon: React.ComponentProps<typeof MaterialIcons>['name']
+  onPress: () => void
+}) => (
+  <Pressable style={{ alignItems: 'center', gap: 8 }} onPress={onPress}>
+    <View
+      style={{
+        borderWidth: 2,
+        borderColor: `${colors.green.light}50`,
+        borderRadius: 48,
+        padding: 8
+      }}>
+      <MaterialIcons name={icon} size={48} color={colors.green.light} />
+    </View>
+    <Text color={colors.green.light} style={{ fontFamily: fonts.rubik400 }}>
+      {text}
+    </Text>
+  </Pressable>
+)
+
+export const ImagePicker = ({
+  defaultValue,
+  onChange
+}: {
+  defaultValue: string
+  onChange: (e: string) => void
+}) => {
   const { isOpen, onClose, onOpen } = useModal()
+
+  const { pickImage } = useImagePicker()
 
   return (
     <>
@@ -35,8 +69,8 @@ export const ImagePicker = ({ defaultValue }: { defaultValue: string }) => {
           <Title>PROFILE PHOTO</Title>
           <Pressable
             style={{
-              borderWidth: 1,
-              borderColor: colors.green.light,
+              borderWidth: 2,
+              borderColor: `${colors.green.light}50`,
               borderRadius: 24,
               padding: 2
             }}>
@@ -44,38 +78,24 @@ export const ImagePicker = ({ defaultValue }: { defaultValue: string }) => {
           </Pressable>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 24 }}>
-          <Pressable style={{ alignItems: 'center', gap: 8 }}>
-            <MaterialIcons
-              name="camera-alt"
-              size={48}
-              color={colors.green.light}
-              style={{
-                borderWidth: 1,
-                borderColor: colors.green.light,
-                borderRadius: 48,
-                padding: 8
-              }}
-            />
-            <Text color={colors.green.light} style={{ fontFamily: fonts.rubik400 }}>
-              Camera
-            </Text>
-          </Pressable>
-          <Pressable style={{ alignItems: 'center', gap: 8 }}>
-            <MaterialIcons
-              name="photo"
-              size={48}
-              color={colors.green.light}
-              style={{
-                borderWidth: 1,
-                borderColor: colors.green.light,
-                borderRadius: 48,
-                padding: 8
-              }}
-            />
-            <Text color={colors.green.light} style={{ fontFamily: fonts.rubik400 }}>
-              Gallery
-            </Text>
-          </Pressable>
+          <Item
+            icon="camera-alt"
+            text="Camera"
+            onPress={async () => {
+              const res = await pickImage(true)
+              onChange(res?.file ?? '')
+              onClose()
+            }}
+          />
+          <Item
+            icon="photo"
+            text="Gallery"
+            onPress={async () => {
+              const res = await pickImage()
+              onChange(res?.file ?? '')
+              onClose()
+            }}
+          />
         </View>
       </Modal>
     </>

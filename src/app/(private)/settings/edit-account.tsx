@@ -58,12 +58,16 @@ export default function EditAccount() {
         {({
           values,
           handleChange,
+          setFieldValue,
           handleSubmit,
           isValid,
           isSubmitting
         }: FormikProps<AccountSchema>) => (
           <View style={{ width: '100%', gap: 16, marginTop: 24 }}>
-            <ImagePicker defaultValue={values.image} />
+            <ImagePicker
+              defaultValue={values.image}
+              onChange={async (e) => await setFieldValue('image', e)}
+            />
 
             <Input label="Name" value={values.name} onChangeText={handleChange('name')} />
             <Input
