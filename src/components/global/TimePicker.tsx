@@ -1,10 +1,11 @@
 import { useModal } from '@/hooks'
 import { colors, fonts } from '@/theme'
-import React, { useMemo, useState } from 'react'
-import { View, type ViewProps, Pressable } from 'react-native'
-import { Text } from './Text'
-import { DateTime } from 'luxon'
 import DateTimePicker, { type AndroidNativeProps } from '@react-native-community/datetimepicker'
+import { DateTime } from 'luxon'
+import React, { useMemo, useState } from 'react'
+import { Pressable, View, type ViewProps } from 'react-native'
+
+import { Text } from './Text'
 
 export const TimePicker = ({
   value,

@@ -1,6 +1,7 @@
 import { colors, fonts } from '@/theme'
 import React from 'react'
 import { View } from 'react-native'
+
 import { Text } from '../global'
 
 export const AccountItem = ({ name, value }: { name: string; value: string }) => (

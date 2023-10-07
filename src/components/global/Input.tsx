@@ -1,6 +1,7 @@
 import { colors, fonts } from '@/theme'
 import React from 'react'
-import { StyleSheet, TextInput, View, type TextInputProps } from 'react-native'
+import { StyleSheet, TextInput, type TextInputProps, View } from 'react-native'
+
 import { Text } from './Text'
 
 type InputProps = TextInputProps

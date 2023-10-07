@@ -1,11 +1,12 @@
+import { useImagePicker, useModal } from '@/hooks'
 import { colors, fonts } from '@/theme'
 import { MaterialIcons } from '@expo/vector-icons'
-import { Image, Pressable, View } from 'react-native'
-import { Modal } from './Modal'
-import { useImagePicker, useModal } from '@/hooks'
-import { Title } from './Title'
-import { Text } from './Text'
 import React from 'react'
+import { Image, Pressable, View } from 'react-native'
+
+import { Modal } from './Modal'
+import { Text } from './Text'
+import { Title } from './Title'
 
 const Item = ({
   text,

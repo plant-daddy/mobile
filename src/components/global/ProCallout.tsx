@@ -1,11 +1,11 @@
-import { Image, View } from 'react-native'
-import { Text } from './Text'
-import { Button } from './Button'
 import { colors } from '@/theme'
 import { Link } from 'expo-router'
-
-import { Title } from './Title'
+import { Image, View } from 'react-native'
 import Modal from 'react-native-modal'
+
+import { Button } from './Button'
+import { Text } from './Text'
+import { Title } from './Title'
 
 const benefits = {
   plant: [

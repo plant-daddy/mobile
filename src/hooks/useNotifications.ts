@@ -1,5 +1,4 @@
 import { type Reminder } from '@/utils/reminders'
-
 import notifee from '@notifee/react-native'
 import { useQuery } from '@tanstack/react-query'
 

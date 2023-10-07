@@ -1,8 +1,9 @@
-import { Image, Pressable, View } from 'react-native'
-import { Text } from '../global'
-import { ScrollView } from 'react-native-gesture-handler'
-import { getPlantFirstName, type Plant } from '@/utils/plant'
+import { type Plant, getPlantFirstName } from '@/utils/plant'
 import { Link } from 'expo-router'
+import { Image, Pressable, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+
+import { Text } from '../global'
 
 export const PlantsList = ({
   plants,
@@ -23,7 +24,7 @@ export const PlantsList = ({
           asChild
           key={plant.id}
           style={{ alignItems: 'center', margin: 8 }}>
-          <Pressable style={({ hovered, pressed }) => [{ opacity: pressed ? 0.8 : 1 }]}>
+          <Pressable style={({ pressed }) => [{ opacity: pressed ? 0.8 : 1 }]}>
             <Image
               source={{ uri: plant.image }}
               style={{ width: 120, height: 150, borderRadius: 16 }}

@@ -2,7 +2,7 @@ import { Button, Input, Text, Title } from '@/components/global'
 import { useAuth } from '@/contexts/auth'
 import { ScreenHeight, ScreenWidth } from '@/theme/dimension'
 import { Link } from 'expo-router'
-import { Image, View, Pressable } from 'react-native'
+import { Image, Pressable, View } from 'react-native'
 
 export default function SignIn() {
   const { signIn } = useAuth()

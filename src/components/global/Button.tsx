@@ -1,11 +1,11 @@
 import { colors } from '@/theme'
 import React from 'react'
 import {
-  Text,
-  type TouchableHighlightProps,
-  type TextStyle,
+  Pressable,
   type StyleProp,
-  Pressable
+  Text,
+  type TextStyle,
+  type TouchableHighlightProps
 } from 'react-native'
 
 type ButtonProps = TouchableHighlightProps & {

@@ -1,6 +1,6 @@
 import { ScreenWidth } from '@/theme/dimension'
 import * as React from 'react'
-import Svg, { Path, Defs, LinearGradient, Stop, type SvgProps } from 'react-native-svg'
+import Svg, { Defs, LinearGradient, Path, Stop, type SvgProps } from 'react-native-svg'
 
 export const AddPlant = (props: SvgProps) => {
   return (

@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  Text,
-  type TouchableHighlightProps,
-  type TextStyle,
+  Pressable,
   type StyleProp,
-  Pressable
+  Text,
+  type TextStyle,
+  type TouchableHighlightProps
 } from 'react-native'
 import { type SvgProps } from 'react-native-svg'
 

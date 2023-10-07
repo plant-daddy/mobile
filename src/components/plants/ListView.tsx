@@ -1,11 +1,12 @@
-import { Image, View, type ViewProps } from 'react-native'
-import { Select, SelectOption, Text, Title } from '../global'
-import { MaterialIcons } from '@expo/vector-icons'
-import { PlantsList } from './PlantsList'
-import { HorizontalInset } from '@/theme/dimension'
 import { colors, fonts } from '@/theme'
+import { HorizontalInset } from '@/theme/dimension'
+import { type Plant, getPlantFirstName } from '@/utils/plant'
+import { MaterialIcons } from '@expo/vector-icons'
 import { Link, router } from 'expo-router'
-import { getPlantFirstName, type Plant } from '@/utils/plant'
+import { Image, View, type ViewProps } from 'react-native'
+
+import { Select, SelectOption, Text, Title } from '../global'
+import { PlantsList } from './PlantsList'
 
 export const ListView = ({
   backgroundColor,

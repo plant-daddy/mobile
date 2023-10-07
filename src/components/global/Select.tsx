@@ -1,14 +1,15 @@
 /* eslint-disable multiline-ternary */
 import { useModal } from '@/hooks'
 import { colors, fonts } from '@/theme'
-import React, { type ReactNode, useMemo, useState, cloneElement } from 'react'
-import { View, type ViewProps, FlatList, Pressable, type FlatListProps } from 'react-native'
-import { Text } from './Text'
+import { HorizontalInset } from '@/theme/dimension'
+import { MaterialIcons } from '@expo/vector-icons'
+import { findIndex, isEqual } from 'lodash'
+import React, { type ReactNode, cloneElement, useMemo, useState } from 'react'
+import { FlatList, type FlatListProps, Pressable, View, type ViewProps } from 'react-native'
+
 import { Input } from './Input'
 import { Modal } from './Modal'
-import { HorizontalInset } from '@/theme/dimension'
-import { findIndex, isEqual } from 'lodash'
-import { MaterialIcons } from '@expo/vector-icons'
+import { Text } from './Text'
 
 const resolveMultiLevelAccess = (obj: any, key: string) =>
   key.split('.').reduce((cur: any, keySection: string) => {

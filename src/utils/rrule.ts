@@ -1,4 +1,5 @@
 import { RRule } from 'rrule'
+
 import { type Frequency } from './reminders'
 
 export const getFrequency = (frequency: Frequency) => {

@@ -1,13 +1,16 @@
-import { type Reminder as ReminderType } from '@/utils/reminders'
-import { Image, View } from 'react-native'
-import { Button, Modal, Text, Title } from '../global'
 import { Fertilize, Water } from '@/assets/svg'
+import { useModal } from '@/hooks'
 import { colors, fonts } from '@/theme'
+import { ScreenWidth } from '@/theme/dimension'
+import { type Reminder as ReminderType } from '@/utils/reminders'
 import { getRecurrence } from '@/utils/rrule'
+import { MaterialIcons } from '@expo/vector-icons'
+import { DateTime } from 'luxon'
+import { Image, View } from 'react-native'
 import {
   PanGestureHandler,
-  type PanGestureHandlerProps,
-  type PanGestureHandlerGestureEvent
+  type PanGestureHandlerGestureEvent,
+  type PanGestureHandlerProps
 } from 'react-native-gesture-handler'
 import Animated, {
   runOnJS,
@@ -16,10 +19,8 @@ import Animated, {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
-import { MaterialIcons } from '@expo/vector-icons'
-import { ScreenWidth } from '@/theme/dimension'
-import { DateTime } from 'luxon'
-import { useModal } from '@/hooks'
+
+import { Button, Modal, Text, Title } from '../global'
 
 const TranslateXThreshhold = -ScreenWidth * 0.3
 

@@ -1,9 +1,9 @@
 import { Button, GoBack, Title } from '@/components/global'
-import { HorizontalInset, VerticalInset } from '@/theme/dimension'
-import { Image, ScrollView, View } from 'react-native'
-import { useUser } from '@/hooks'
-import { router } from 'expo-router'
 import { AccountItem } from '@/components/settings'
+import { useUser } from '@/hooks'
+import { HorizontalInset, VerticalInset } from '@/theme/dimension'
+import { router } from 'expo-router'
+import { Image, ScrollView, View } from 'react-native'
 
 export default function Account() {
   const { data } = useUser()

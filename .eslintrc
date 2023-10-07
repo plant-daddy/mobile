@@ -7,7 +7,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "unused-imports"],
   "rules": {
     "curly": "off",
     "no-param-reassign": "off",
@@ -55,6 +55,12 @@
     "@typescript-eslint/consistent-type-assertions": "off",
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/member-delimiter-style": "off",
-    "@typescript-eslint/no-misused-promises": "off"
+    "@typescript-eslint/no-misused-promises": "off",
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ]
   }
 }

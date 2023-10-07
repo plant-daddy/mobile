@@ -10,17 +10,17 @@ import {
   TimePicker,
   Title
 } from '@/components/global'
+import { useModal, useNotifications, useUser } from '@/hooks'
+import { scheduleReminder } from '@/service/notifier'
 import { HorizontalInset, ScreenWidth, VerticalInset } from '@/theme/dimension'
-import { Image, ScrollView, View } from 'react-native'
-import { Formik, type FormikProps } from 'formik'
-import { reminderTypeReadonly, reminderFrequencyReadonly } from '@/utils/reminders'
+import { reminderFrequencyReadonly, reminderTypeReadonly } from '@/utils/reminders'
 import { router, useLocalSearchParams } from 'expo-router'
+import { Formik, type FormikProps } from 'formik'
 import { capitalize } from 'lodash'
+import { DateTime } from 'luxon'
+import { Image, ScrollView, View } from 'react-native'
 import { z } from 'zod'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
-import { scheduleReminder } from '@/service/notifier'
-import { DateTime } from 'luxon'
-import { useModal, useNotifications, useUser } from '@/hooks'
 
 const reminderType = ['water', 'fertilize']
 const reminderFrequency = ['every minute', 'hourly', 'daily', 'weekly', 'monthly', 'yearly']

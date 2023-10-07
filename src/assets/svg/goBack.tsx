@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Svg, { Path, Defs, Pattern, Use, Image, type SvgProps } from 'react-native-svg'
+import Svg, { Defs, Image, Path, Pattern, type SvgProps, Use } from 'react-native-svg'
 
 export const GoBackSVG = (props: SvgProps) => (
   <Svg width={36} height={36} viewBox="0 0 50 51" fill="none" {...props}>

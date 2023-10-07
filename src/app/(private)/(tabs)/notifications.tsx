@@ -1,14 +1,14 @@
-import { Water, Fertilize } from '@/assets/svg'
+import { Fertilize, Water } from '@/assets/svg'
 import { CheckableButton, Text, Title } from '@/components/global'
 import { Reminder } from '@/components/reminders'
+import { useNotifications } from '@/hooks'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
 import { MaterialIcons } from '@expo/vector-icons'
-import { useCallback, useMemo, useRef, useState } from 'react'
-import { RefreshControl, View, ScrollView as NativeScrollView } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
 import notifee from '@notifee/react-native'
-import { useNotifications } from '@/hooks'
+import { useCallback, useMemo, useRef, useState } from 'react'
+import { ScrollView as NativeScrollView, RefreshControl, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function Notifications() {
   const { data: reminders, refetch, isRefetching } = useNotifications()

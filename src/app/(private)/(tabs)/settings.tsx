@@ -3,6 +3,7 @@ import { SettingsItem } from '@/components/settings'
 import { useAuth } from '@/contexts/auth'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
+import { web } from '@/utils/env'
 import { router } from 'expo-router'
 import { ScrollView, View } from 'react-native'
 
@@ -30,7 +31,20 @@ export default function Settings() {
             router.push('/settings/account')
           }}
         />
-        <SettingsItem icon="help-outline" text="FAQ" onPress={() => {}} dividerTop external />
+        <SettingsItem
+          icon="help-outline"
+          text="FAQ"
+          onPress={() => {
+            router.push({
+              pathname: '/settings/webview',
+              params: {
+                url: `${web()}/faq`
+              }
+            })
+          }}
+          dividerTop
+          external
+        />
         <SettingsItem
           icon="auto-awesome"
           text="Plant Daddy Pro"

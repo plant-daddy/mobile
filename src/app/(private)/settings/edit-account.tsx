@@ -1,20 +1,10 @@
-import {
-  Button,
-  DatePicker,
-  GoBack,
-  ImagePicker,
-  Input,
-  Select,
-  SelectOption,
-  TimePicker,
-  Title
-} from '@/components/global'
+import { Button, GoBack, ImagePicker, Input, Title } from '@/components/global'
+import { useUser } from '@/hooks'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
-import { ScrollView, View } from 'react-native'
 import { Formik, type FormikProps } from 'formik'
+import { ScrollView, View } from 'react-native'
 import { z } from 'zod'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
-import { useUser } from '@/hooks'
 
 const validationSchema = z.object({
   name: z.string(),

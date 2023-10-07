@@ -1,8 +1,9 @@
 import { ProCardPattern } from '@/assets/svg'
 import { colors } from '@/theme'
-import { View } from 'react-native'
-import { Title } from '../global'
 import React from 'react'
+import { View } from 'react-native'
+
+import { Title } from '../global'
 
 export const BenefitCard = ({
   Image,

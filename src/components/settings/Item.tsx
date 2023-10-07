@@ -1,7 +1,8 @@
+import { colors } from '@/theme'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Pressable, View } from 'react-native'
+
 import { Text } from '../global'
-import { colors } from '@/theme'
 
 export const SettingsItem = ({
   icon,

@@ -1,18 +1,17 @@
+import { AuthProvider, useAuth } from '@/contexts/auth'
+import { scheduleReminder } from '@/service/notifier'
+import { colors } from '@/theme'
+import { type Reminder } from '@/utils/reminders'
+import { Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito'
+import { Rubik_300Light, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik'
+import notifee, { EventType } from '@notifee/react-native'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useFonts } from 'expo-font'
 import { Slot, SplashScreen, useRouter, useSegments } from 'expo-router'
-import { useEffect } from 'react'
-
-import { Rubik_300Light, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik'
-import { Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { AuthProvider, useAuth } from '@/contexts/auth'
-import notifee, { EventType } from '@notifee/react-native'
-import { type Reminder } from '@/utils/reminders'
-import { scheduleReminder } from '@/service/notifier'
-import { DateTime } from 'luxon'
 import { setBackgroundColorAsync } from 'expo-system-ui'
-import { colors } from '@/theme'
+import { DateTime } from 'luxon'
+import { useEffect } from 'react'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 export { ErrorBoundary } from 'expo-router'
 
@@ -22,7 +21,7 @@ SplashScreen.preventAutoHideAsync()
 setBackgroundColorAsync(colors.white.primary)
 
 const InitialLayout = () => {
-  const { authenticated, loading } = useAuth()
+  const { accessToken, loading } = useAuth()
   const segments = useSegments()
   const router = useRouter()
 
@@ -31,9 +30,9 @@ const InitialLayout = () => {
 
     const inPrivateGroup = segments[0] === '(private)'
 
-    if (authenticated && !inPrivateGroup) router.replace('/home')
-    else if (!authenticated && inPrivateGroup) router.replace('/')
-  }, [authenticated, segments[0]])
+    if (accessToken && !inPrivateGroup) router.replace('/home')
+    else if (!accessToken && inPrivateGroup) router.replace('/')
+  }, [accessToken, segments[0]])
 
   return <Slot />
 }

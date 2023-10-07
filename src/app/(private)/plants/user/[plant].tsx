@@ -19,7 +19,9 @@ export default function PlantDetails() {
         paddingVertical: VerticalInset
       }}>
       <Plant {...data} name={data.name} />
-      <Link asChild href={`/add-reminder?name=${data.name}&image=${data.image}`}>
+      <Link
+        asChild
+        href={{ pathname: '/add-reminder', params: { name: data.name, image: data.image } }}>
         <Button primary style={{ marginTop: 16 }}>
           Add reminder
         </Button>

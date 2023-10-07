@@ -1,8 +1,6 @@
 import { colors } from '@/theme'
-import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
-
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import { SafeAreaView, View } from 'react-native'
-
 import RNModal, { type ModalProps } from 'react-native-modal'
 
 interface ModalRef {

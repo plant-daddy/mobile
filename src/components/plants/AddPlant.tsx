@@ -1,10 +1,11 @@
-import { Image, View } from 'react-native'
 import { AddPlant as AddPlantSvg } from '@/assets/svg'
-import { Button, Input, Select, SelectOption, Text, Title } from '../global'
-import { useState } from 'react'
-import { getPlantFirstName } from '@/utils/plant'
 import { usePlants } from '@/hooks'
 import { fonts } from '@/theme'
+import { getPlantFirstName } from '@/utils/plant'
+import { useState } from 'react'
+import { Image, View } from 'react-native'
+
+import { Button, Input, Select, SelectOption, Text, Title } from '../global'
 
 export const AddPlant = ({ title, onSubmit }: { title: string; onSubmit?: () => void }) => {
   const { data } = usePlants()

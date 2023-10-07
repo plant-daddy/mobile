@@ -1,8 +1,9 @@
 /* eslint-disable multiline-ternary */
-import { Image, ScrollView, View } from 'react-native'
-import { GoBack, Text, Title } from '../global'
-import { type Plant as PlantType, getPlantFirstName, getPlanInfo } from '@/utils/plant'
 import { fonts } from '@/theme'
+import { type Plant as PlantType, getPlanInfo, getPlantFirstName } from '@/utils/plant'
+import { Image, ScrollView, View } from 'react-native'
+
+import { GoBack, Text, Title } from '../global'
 
 export const Plant = ({
   image,

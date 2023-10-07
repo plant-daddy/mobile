@@ -1,10 +1,10 @@
+import { Notification, Plants } from '@/assets/svg'
 import { Button, Text, Title } from '@/components/global'
+import { BenefitCard } from '@/components/settings'
+import { useUser } from '@/hooks'
+import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
 import { Image, ScrollView, View } from 'react-native'
-import { useUser } from '@/hooks'
-import { BenefitCard } from '@/components/settings'
-import { colors } from '@/theme'
-import { Notification, Plants } from '@/assets/svg'
 
 export default function Pro() {
   const { data } = useUser()

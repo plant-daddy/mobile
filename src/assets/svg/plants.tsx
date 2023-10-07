@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Svg, { G, Path, Defs, ClipPath, type SvgProps } from 'react-native-svg'
+import Svg, { ClipPath, Defs, G, Path, type SvgProps } from 'react-native-svg'
 
 export const Plants = (props: SvgProps) => {
   return (

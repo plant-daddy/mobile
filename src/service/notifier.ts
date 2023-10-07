@@ -1,13 +1,13 @@
 import { type ReminderSchema } from '@/app/(private)/add-reminder'
 import { getFrequency } from '@/utils/rrule'
 import notifee, {
-  TriggerType,
   AndroidImportance,
-  type TimestampTrigger
+  type TimestampTrigger,
+  TriggerType
 } from '@notifee/react-native'
 import { DateTime } from 'luxon'
-import { RRule } from 'rrule'
 import uuid from 'react-native-uuid'
+import { RRule } from 'rrule'
 
 export const createNotificationChannel = async () => {
   await notifee.requestPermission()
