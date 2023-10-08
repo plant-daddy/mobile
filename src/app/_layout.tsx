@@ -1,3 +1,4 @@
+import { ApiProvider } from '@/contexts/api'
 import { AuthProvider, useAuth } from '@/contexts/auth'
 import { scheduleReminder } from '@/service/notifier'
 import { colors } from '@/theme'
@@ -21,13 +22,11 @@ SplashScreen.preventAutoHideAsync()
 setBackgroundColorAsync(colors.white.primary)
 
 const InitialLayout = () => {
-  const { accessToken, loading } = useAuth()
+  const { accessToken } = useAuth()
   const segments = useSegments()
   const router = useRouter()
 
   useEffect(() => {
-    if (loading) return
-
     const inPrivateGroup = segments[0] === '(private)'
 
     if (accessToken && !inPrivateGroup) router.replace('/home')
@@ -74,11 +73,13 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <InitialLayout />
-        </GestureHandlerRootView>
-      </QueryClientProvider>
+      <ApiProvider>
+        <QueryClientProvider client={queryClient}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <InitialLayout />
+          </GestureHandlerRootView>
+        </QueryClientProvider>
+      </ApiProvider>
     </AuthProvider>
   )
 }

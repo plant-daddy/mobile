@@ -1,12 +1,15 @@
 import { Button, GoBack, Title } from '@/components/global'
 import { AccountItem } from '@/components/settings'
+import { useApi } from '@/contexts/api'
 import { useUser } from '@/hooks'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
 import { router } from 'expo-router'
 import { Image, ScrollView, View } from 'react-native'
 
 export default function Account() {
-  const { data } = useUser()
+  const { api } = useApi()
+
+  const { data } = useUser(api)
 
   if (!data) return <></>
 
@@ -26,7 +29,7 @@ export default function Account() {
           source={{ uri: data.image }}
           style={{ width: 120, height: 120, borderRadius: 60, alignSelf: 'center' }}
         />
-        <AccountItem name="Name" value={data.name} />
+        <AccountItem name="Name" value={data.username} />
         <AccountItem name="Email" value={data.email} />
         <Button
           onPress={() => {

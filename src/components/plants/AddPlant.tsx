@@ -1,4 +1,5 @@
 import { AddPlant as AddPlantSvg } from '@/assets/svg'
+import { useApi } from '@/contexts/api'
 import { usePlants } from '@/hooks'
 import { fonts } from '@/theme'
 import { getPlantFirstName } from '@/utils/plant'
@@ -8,7 +9,9 @@ import { Image, View } from 'react-native'
 import { Button, Input, Select, SelectOption, Text, Title } from '../global'
 
 export const AddPlant = ({ title, onSubmit }: { title: string; onSubmit?: () => void }) => {
-  const { data } = usePlants()
+  const { api } = useApi()
+
+  const { data } = usePlants(api)
   const [selectedValue, setSelectedValue] = useState()
 
   return (
@@ -19,9 +22,10 @@ export const AddPlant = ({ title, onSubmit }: { title: string; onSubmit?: () => 
         <Select
           searchableProps={['botanicalName', 'commonName', 'type']}
           placeholder="Plant"
-          data={data ?? []}
+          data={data?.pages.flatMap((item) => item.plants) ?? []}
           selectedValueLabel={getPlantFirstName(
-            (data ?? []).find((p) => p.id === selectedValue)?.commonName ?? ''
+            (data?.pages.flatMap((item) => item.plants) ?? []).find((p) => p.id === selectedValue)
+              ?.commonName ?? ''
           )}
           value={selectedValue}
           onSelect={(value) => {

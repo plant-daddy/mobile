@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 import { colors, fonts } from '@/theme'
 import { HorizontalInset } from '@/theme/dimension'
 import { type Plant, getPlantFirstName } from '@/utils/plant'
@@ -5,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { Link, router } from 'expo-router'
 import { Image, View, type ViewProps } from 'react-native'
 
-import { Select, SelectOption, Text, Title } from '../global'
+import { Button, Select, SelectOption, Text, Title } from '../global'
 import { PlantsList } from './PlantsList'
 
 export const ListView = ({
@@ -16,6 +17,7 @@ export const ListView = ({
   plants,
   isUserPlant,
   disabled,
+  fetchNextPage,
   ...rest
 }: {
   title: string
@@ -25,6 +27,7 @@ export const ListView = ({
   plants: Plant[]
   isUserPlant?: boolean
   disabled?: boolean
+  fetchNextPage: () => void
 } & ViewProps) => (
   <View
     style={[
@@ -80,16 +83,25 @@ export const ListView = ({
         )}
       </View>
     </View>
-    {count && (
+    {count && plants.length > 0 && (
       <Text style={{ color: colors.green.dark, marginBottom: 4 }}>
         You have {plants.length} plants!
       </Text>
     )}
-    <PlantsList
-      textColor={textColor}
-      plants={plants}
-      isUserPlant={isUserPlant}
-      disabled={disabled}
-    />
+    {plants.length === 0 && isUserPlant && (
+      <View style={{ alignSelf: 'center', gap: 8 }}>
+        <Text>You have no plants yet</Text>
+        <Button primary>Add plant</Button>
+      </View>
+    )}
+    {plants.length > 0 && (
+      <PlantsList
+        textColor={textColor}
+        plants={plants}
+        isUserPlant={isUserPlant}
+        disabled={disabled}
+        fetchNextPage={fetchNextPage}
+      />
+    )}
   </View>
 )

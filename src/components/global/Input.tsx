@@ -1,25 +1,16 @@
 import { colors, fonts } from '@/theme'
 import React from 'react'
-import { StyleSheet, TextInput, type TextInputProps, View } from 'react-native'
+import { TextInput, type TextInputProps, View } from 'react-native'
 
 import { Text } from './Text'
 
-type InputProps = TextInputProps
-
-const style = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: colors.green.light,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    fontFamily: fonts.rubik300,
-    color: colors.green.dark
-  }
-})
+type InputProps = TextInputProps & {
+  error?: string
+}
 
 export const Input = ({
   label,
+  error,
   ...props
 }: InputProps & {
   label?: string
@@ -38,8 +29,29 @@ export const Input = ({
     )}
     <TextInput
       {...props}
-      style={[style.input, props.style]}
+      style={[
+        {
+          borderWidth: 1,
+          borderRadius: 5,
+          borderColor: colors.green.light,
+          paddingHorizontal: 16,
+          paddingVertical: 8,
+          fontFamily: fonts.rubik300,
+          color: colors.green.dark
+        },
+        props.style
+      ]}
       placeholderTextColor={colors.gray.mid}
     />
+    {error && (
+      <Text
+        style={{
+          fontFamily: fonts.rubik400,
+          color: colors.red.primary,
+          marginBottom: 8
+        }}>
+        {error}
+      </Text>
+    )}
   </View>
 )

@@ -1,6 +1,8 @@
+/* eslint-disable multiline-ternary */
 import { colors } from '@/theme'
 import React from 'react'
 import {
+  ActivityIndicator,
   Pressable,
   type StyleProp,
   Text,
@@ -12,12 +14,20 @@ type ButtonProps = TouchableHighlightProps & {
   children: React.ReactNode
   textStyle?: StyleProp<TextStyle>
   primary?: boolean
+  isLoading?: boolean
 }
 
-export const Button = ({ children, primary, textStyle, disabled, ...rest }: ButtonProps) => (
+export const Button = ({
+  children,
+  primary,
+  textStyle,
+  disabled,
+  isLoading,
+  ...rest
+}: ButtonProps) => (
   <Pressable
     {...rest}
-    disabled={disabled}
+    disabled={!!disabled || !!isLoading}
     style={({ pressed }) => [
       {
         opacity: disabled ? 0.5 : pressed ? 0.8 : 1,
@@ -31,16 +41,20 @@ export const Button = ({ children, primary, textStyle, disabled, ...rest }: Butt
         ...(rest.style as Object)
       }
     ]}>
-    <Text
-      style={[
-        {
-          ...(primary && {
-            color: colors.white.primary
-          })
-        },
-        textStyle
-      ]}>
-      {children}
-    </Text>
+    {isLoading ? (
+      <ActivityIndicator color={colors.white.primary} size="small" />
+    ) : (
+      <Text
+        style={[
+          {
+            ...(primary && {
+              color: colors.white.primary
+            })
+          },
+          textStyle
+        ]}>
+        {children}
+      </Text>
+    )}
   </Pressable>
 )

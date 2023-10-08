@@ -7,6 +7,7 @@
     "icon": "./src/assets/images/icon.png",
     "scheme": "plant-daddy",
     "userInterfaceStyle": "automatic",
+
     "splash": {
       "image": "./src/assets/images/splash.png",
       "resizeMode": "contain",
@@ -20,7 +21,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "softwareKeyboardLayoutMode": "pan"
       },
       "package": "com.liviabelirocha.plantdaddy"
     },
@@ -52,7 +54,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "8db5c768-e491-4136-8a0b-6ebdd5e137aa"
+        "projectId": "project-id"
       }
     }
   }

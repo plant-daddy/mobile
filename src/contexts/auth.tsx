@@ -1,3 +1,4 @@
+import { type APIResponse, publicApi } from '@/service/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
@@ -8,11 +9,10 @@ interface Storaged {
 
 interface AuthContextData {
   signIn: (params: { email: string; password: string }) => Promise<void>
-  signUp: (params: { email: string; password: string; name: string }) => Promise<void>
+  signUp: (params: { email: string; password: string; username: string }) => Promise<void>
   signOut: () => void
   accessToken?: string
   refreshToken?: string
-  loading: boolean
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
@@ -20,14 +20,12 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const [accessToken, setAccessToken] = useState<string>()
   const [refreshToken, setRefreshToken] = useState<string>()
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     void loadStorageData()
   }, [])
 
   async function loadStorageData(): Promise<void> {
-    setLoading(true)
     try {
       const tokensSerializable = await AsyncStorage.getItem('@Tokens')
 
@@ -40,33 +38,50 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       setAccessToken(undefined)
       setRefreshToken(undefined)
     }
-    setLoading(false)
   }
 
   const signIn = useCallback(
-    async ({ email, password }: { email: string; password: string }) => {
-      setLoading(true)
-      setAccessToken(email)
-      setRefreshToken(email)
+    async (params: { email: string; password: string }) => {
+      const { data } = await publicApi.post<
+        APIResponse<{ accessToken: string; refreshToken: string }>
+      >('/signIn', params)
+
+      console.log(data)
+
+      setAccessToken(data.result.data.accessToken)
+      setRefreshToken(data.result.data.refreshToken)
       await AsyncStorage.setItem(
         '@Tokens',
-        JSON.stringify({ accessToken: email, refreshToken: email })
+        JSON.stringify({
+          accessToken: data.result.data.accessToken,
+          refreshToken: data.result.data.refreshToken
+        })
       )
-      setLoading(false)
     },
     [setAccessToken, setRefreshToken]
   )
 
   const signUp = useCallback(
-    async ({ email, password, name }: { email: string; password: string; name: string }) => {
-      setLoading(true)
-      setAccessToken(email)
-      setRefreshToken(email)
-      await AsyncStorage.setItem(
-        '@Tokens',
-        JSON.stringify({ accessToken: email, refreshToken: email })
-      )
-      setLoading(false)
+    async (params: { email: string; password: string; username: string }) => {
+      try {
+        const { data } = await publicApi.post<
+          APIResponse<{ accessToken: string; refreshToken: string }>
+        >('/user', params)
+
+        console.log(data)
+
+        setAccessToken(data.result.data.accessToken)
+        setRefreshToken(data.result.data.refreshToken)
+        await AsyncStorage.setItem(
+          '@Tokens',
+          JSON.stringify({
+            accessToken: data.result.data.accessToken,
+            refreshToken: data.result.data.refreshToken
+          })
+        )
+      } catch (err) {
+        console.error(JSON.stringify(err, null, 2))
+      }
     },
     [setAccessToken, setRefreshToken]
   )
@@ -84,7 +99,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         signUp,
         signOut,
         accessToken,
-        loading
+        refreshToken
       }}>
       {children}
     </AuthContext.Provider>

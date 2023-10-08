@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { ListView } from '@/components/plants'
+import { useApi } from '@/contexts/api'
 import { usePlants, useUserPlants } from '@/hooks'
 import { colors } from '@/theme'
 import { ScreenHeight, ScreenWidth } from '@/theme/dimension'
@@ -17,8 +19,26 @@ import Animated, {
 const MaxTranslateY = -ScreenHeight + 50
 
 export default function Home() {
-  const { data: plants } = usePlants()
-  const { data: userPlants } = useUserPlants()
+  const { api } = useApi()
+
+  const {
+    data: plants,
+    fetchNextPage: fetchPlantsNextPage,
+    hasNextPage: hasNextPlantsPage
+  } = usePlants(api)
+  const {
+    data: userPlants,
+    fetchNextPage: fetchUserPlantsNextPage,
+    hasNextPage: hasNextUserPlantsPage
+  } = useUserPlants(api)
+
+  const loadNextPlantsPageData = () => {
+    if (hasNextPlantsPage) fetchPlantsNextPage()
+  }
+
+  const loadNextUserPlantsPageData = () => {
+    if (hasNextUserPlantsPage) fetchUserPlantsNextPage()
+  }
 
   const [isBottomSheetUp, setIsBottomSheetUp] = useState(false)
 
@@ -72,7 +92,8 @@ export default function Home() {
         style={{ paddingTop: 48 }}
         count
         isUserPlant
-        plants={userPlants ?? []}
+        fetchNextPage={loadNextUserPlantsPageData}
+        plants={userPlants?.pages.flatMap((page) => page.plants) ?? []}
       />
       <GestureDetector gesture={gesture}>
         <Animated.View
@@ -102,7 +123,8 @@ export default function Home() {
             textColor={colors.white.primary}
             title="ALL PLANTS"
             style={{ marginBottom: 200 }}
-            plants={plants ?? []}
+            fetchNextPage={loadNextPlantsPageData}
+            plants={plants?.pages.flatMap((page) => page.plants) ?? []}
             disabled={!isBottomSheetUp}
           />
         </Animated.View>
