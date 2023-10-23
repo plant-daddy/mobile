@@ -76,7 +76,9 @@ export default function RootLayout() {
       <ApiProvider>
         <QueryClientProvider client={queryClient}>
           <GestureHandlerRootView style={{ flex: 1 }}>
+            {/* <StripeProvider publishableKey="pk_test_51K1Xp8C9627s8ysgDCBxpllc567ZpjG7JK2wjLi3xwphbGG7gEOTonE7llZVaINZ3cyD7xYAHvw1JW5tnCa9gwCG00kr0CgFI4"> */}
             <InitialLayout />
+            {/* </StripeProvider> */}
           </GestureHandlerRootView>
         </QueryClientProvider>
       </ApiProvider>

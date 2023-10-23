@@ -1,5 +1,6 @@
 import { type APIResponse, publicApi } from '@/service/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { isAxiosError } from 'axios'
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 interface Storaged {
@@ -13,6 +14,13 @@ interface AuthContextData {
   signOut: () => void
   accessToken?: string
   refreshToken?: string
+  setTokens: ({
+    accessToken,
+    refreshToken
+  }: {
+    accessToken: string
+    refreshToken: string
+  }) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
@@ -40,23 +48,35 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
     }
   }
 
-  const signIn = useCallback(
-    async (params: { email: string; password: string }) => {
-      const { data } = await publicApi.post<
-        APIResponse<{ accessToken: string; refreshToken: string }>
-      >('/signIn', params)
-
-      console.log(data)
-
-      setAccessToken(data.result.data.accessToken)
-      setRefreshToken(data.result.data.refreshToken)
+  const setTokens = useCallback(
+    async ({ accessToken, refreshToken }: { accessToken: string; refreshToken: string }) => {
+      setAccessToken(accessToken)
+      setRefreshToken(refreshToken)
       await AsyncStorage.setItem(
         '@Tokens',
         JSON.stringify({
+          accessToken,
+          refreshToken
+        })
+      )
+    },
+    []
+  )
+
+  const signIn = useCallback(
+    async (params: { email: string; password: string }) => {
+      try {
+        const { data } = await publicApi.post<
+          APIResponse<{ accessToken: string; refreshToken: string }>
+        >('/signIn', params)
+
+        await setTokens({
           accessToken: data.result.data.accessToken,
           refreshToken: data.result.data.refreshToken
         })
-      )
+      } catch (error) {
+        if (isAxiosError(error)) console.error(error.response)
+      }
     },
     [setAccessToken, setRefreshToken]
   )
@@ -68,17 +88,10 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
           APIResponse<{ accessToken: string; refreshToken: string }>
         >('/user', params)
 
-        console.log(data)
-
-        setAccessToken(data.result.data.accessToken)
-        setRefreshToken(data.result.data.refreshToken)
-        await AsyncStorage.setItem(
-          '@Tokens',
-          JSON.stringify({
-            accessToken: data.result.data.accessToken,
-            refreshToken: data.result.data.refreshToken
-          })
-        )
+        await setTokens({
+          accessToken: data.result.data.accessToken,
+          refreshToken: data.result.data.refreshToken
+        })
       } catch (err) {
         console.error(JSON.stringify(err, null, 2))
       }
@@ -99,7 +112,8 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         signUp,
         signOut,
         accessToken,
-        refreshToken
+        refreshToken,
+        setTokens
       }}>
       {children}
     </AuthContext.Provider>

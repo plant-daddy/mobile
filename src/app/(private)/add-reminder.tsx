@@ -10,6 +10,7 @@ import {
   TimePicker,
   Title
 } from '@/components/global'
+import { useApi } from '@/contexts/api'
 import { useModal, useNotifications, useUser } from '@/hooks'
 import { scheduleReminder } from '@/service/notifier'
 import { HorizontalInset, ScreenWidth, VerticalInset } from '@/theme/dimension'
@@ -75,7 +76,9 @@ export default function AddReminder() {
 
   if (!plant.name || !plant.image) router.back()
 
-  const { data: user } = useUser()
+  const { api } = useApi()
+
+  const { data: user } = useUser(api)
   const { data: notifications } = useNotifications()
   const { isOpen, onClose, onOpen } = useModal()
 

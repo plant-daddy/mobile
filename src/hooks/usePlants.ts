@@ -8,7 +8,7 @@ export const usePlants = (api: AxiosInstance) =>
     queryKey: ['plants'],
     queryFn: async ({ pageParam = 1 }) => {
       const plants = (
-        await api.get<APIResponse<{ plants: Plant[] }>>('/plant/list', {
+        await api.get<APIResponse<{ plants: Plant[] }>>('/plants', {
           params: { page: pageParam, limit: 30 }
         })
       ).data.result.data.plants

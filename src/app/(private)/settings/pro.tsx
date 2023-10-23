@@ -1,13 +1,26 @@
 import { Notification, Plants } from '@/assets/svg'
 import { Button, Text, Title } from '@/components/global'
 import { BenefitCard } from '@/components/settings'
+import { useApi } from '@/contexts/api'
 import { useUser } from '@/hooks'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
 import { Image, ScrollView, View } from 'react-native'
 
 export default function Pro() {
-  const { data } = useUser()
+  const { api } = useApi()
+  const { data } = useUser(api)
+
+  // const { initPaymentSheet, presentPaymentSheet, loading } = usePaymentSheet()
+
+  // useEffect(() => {
+  //   ;(async () => {
+  //     await initPaymentSheet({
+  //       customerId: data?.id,
+
+  //     })
+  //   })()
+  // })
 
   return (
     <ScrollView

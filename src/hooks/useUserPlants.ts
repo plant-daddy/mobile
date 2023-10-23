@@ -8,13 +8,15 @@ export const useUserPlants = (api: AxiosInstance) =>
     queryKey: ['userPlants'],
     queryFn: async ({ pageParam = 1 }) => {
       const plants = (
-        await api.get<APIResponse<{ plants: Plant[]; count: number }>>('/plant/list', {
+        await api.get<
+          APIResponse<{ userPlants: Array<{ plant: Plant; id: number }>; count: number }>
+        >('/userPlants', {
           params: { page: pageParam, limit: 30 }
         })
       ).data.result.data
 
       return {
-        plants: plants.plants,
+        plants: plants.userPlants.map((plant) => ({ ...plant.plant, id: plant.id })),
         count: plants.count,
         nextPage: pageParam + 1
       }

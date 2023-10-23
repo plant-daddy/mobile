@@ -27,7 +27,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/kBxqMH__PefRDUgPixP9ROC89TI=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/KaraRileyAeoniums-13-1c0b63c195bf43a1a841c2cd7fe49b58.jpg',
     toxicity: 'Non-toxic',
-    id: '1'
+    id: 1
   },
   {
     description:
@@ -55,7 +55,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/7HbnU88qz5bQWcNb_90Q4W_XHBI=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/grow-aerangis-orchids-1902580-hero-74ae669f18a440d5a9aeb768a02a2b62.jpg',
     toxicity: 'Non-toxic',
-    id: '2'
+    id: 2
   },
   {
     description:
@@ -83,7 +83,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/3x9JjfDFB_JZ4LdAiUWU36NrT6M=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/growing-and-caring-for-african-daisies-1402912-17-a4248dc4bd8746bdb06e7404c51beaa5.jpg',
     toxicity: 'Nontoxic',
-    id: '3'
+    id: 3
   },
   {
     description:
@@ -111,7 +111,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/e5nc5aAbKRFsukyAA8mZtd49lwI=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/FernPineFlickrStarrEnvironmental-56a98d7f3df78cf772a833a8.jpg',
     toxicity: 'Possibly toxic',
-    id: '4'
+    id: 4
   },
   {
     description:
@@ -139,7 +139,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/A_HOjntxIS8nUi2GfDH5-I76q9k=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/amazon-elephants-ear-alocasia-amazonica-overview-1902737-01-610f1a4b7d59467580be5acc4788aeee.jpg',
     toxicity: 'Toxic to humans, dogs, and cats',
-    id: '5'
+    id: 5
   },
   {
     description:
@@ -167,7 +167,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/iWI-PNAyRJqNP1u6msrKi0cbTs4=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/african-milk-tree-profile-4846360-hero-35341f159a5f4ce891a4d79b29b0aec0.jpg',
     toxicity: 'Toxic to humans and animals',
-    id: '6'
+    id: 6
   },
   {
     description:
@@ -195,7 +195,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/cUOIYBn4c_j2Il_cgVkNLUtEEIA=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/grow-sansevieria-cylindrica-1902732-HERO-d9060791adcf4da49270b3413c527be6.jpg',
     toxicity: 'Toxic to pets and humans',
-    id: '7'
+    id: 7
   },
   {
     description:
@@ -223,7 +223,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/0lpP9dPe233X9K8yiBxvGe4Agk4=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/grow-alocasia-indoors-1902735-03-e84e0164715746a0aee5b1a83aefe4ca.jpg',
     toxicity: 'Many species are highly toxic to humans and pets',
-    id: '8'
+    id: 8
   },
   {
     description:
@@ -251,7 +251,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/RWpFlIyHjRcLw1TsfPQ0x-J4jdk=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/rose-of-sharon-bush-2132728-6-7a3849aa0155410f94c18c4502d59197.jpg',
     toxicity: 'Non-toxic',
-    id: '9'
+    id: 9
   },
   {
     description:
@@ -279,7 +279,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/Kbuiwd2aI37su1q_opRJxGX2-F4=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/how-to-grow-sweet-alyssum-1402862-13-9732fee8347242c496425f14e024aea4.jpg',
     toxicity: 'Non-toxic',
-    id: '10'
+    id: 10
   },
   {
     description:
@@ -307,7 +307,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/94sC-k6H5q9AscQt9hx_6PnyrCI=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/20848805204_952a243038_k-56d28b705f9b5879cc87fdfe.jpg',
     toxicity: 'Non-toxic',
-    id: '11'
+    id: 11
   },
   {
     description:
@@ -335,7 +335,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/h3J7tv0MlX1cmy6Y4ax5vgKpczQ=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Amaryllis-GettyImages-187144212-58b3934f5f9b5860461c39b0.jpg',
     toxicity: 'Mildly toxic',
-    id: '12'
+    id: 12
   },
   {
     description:
@@ -362,7 +362,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/19mOk9SzFbA0Wh8euEZUdDkiCVk=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-538513226-590a8fbb3df78c928391ec56.jpg',
     toxicity: 'Toxic to people and pets; fruit is non-toxic to people once cooked',
-    id: '13'
+    id: 13
   },
   {
     description:
@@ -390,7 +390,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/0KU2MeTqrfxzAXYjUUVfm7RAkjo=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/persimmonsCA-e9e15a6655f342cba79022223d1f82cb.jpg',
     toxicity: 'Non-toxic',
-    id: '14'
+    id: 14
   },
   {
     description:
@@ -418,7 +418,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/OY6g7vFnR7qjimI2h6WCvU2Eap8=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/AmericanWisteria-0ee53a5ad32e42b39d02c44bf1afa44a.jpg',
     toxicity: 'Toxic to humans and pets',
-    id: '15'
+    id: 15
   },
   {
     description:
@@ -447,7 +447,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/QwZH_J7hfAqQo27jlyrfhZulLho=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/-grow-angels-trumpet-indoors-1902439-2-480abb5c377a4457aca28ac4a3046770.jpg',
     toxicity: 'Toxic to people and animals',
-    id: '16'
+    id: 16
   },
   {
     description:
@@ -475,7 +475,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/B1Lh-v1AVMuGLwHu6dzhXpqHZyg=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/angelina-stonecrop-ground-cover-2132211-hero-50f03abd60c54cc8ad3bb6039f03369a.jpg',
     toxicity: 'Non-toxic',
-    id: '17'
+    id: 17
   },
   {
     description:
@@ -503,7 +503,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/zp-lIxSs7sDmUuTrvNs8pEZEbxA=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/growing-anise-magnolia-5078439-hero-51e3b8d9e16f4c75aac46ab2560e9df0.jpg',
     toxicity: 'Non-toxic',
-    id: '18'
+    id: 18
   },
   {
     description:
@@ -531,7 +531,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/HsScjvPLTuQ42ye5WHXXsGFzCN4=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/grow-areca-palms-indoors-1902876-hero-41f1a621c4e2462bace0b9658fa66931.jpg',
     toxicity: 'Nontoxic',
-    id: '19'
+    id: 19
   },
   {
     description:
@@ -558,7 +558,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/Kgyta6hDL2kVtycNnb38FcNzG3w=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/arizona-cypress-growing-tips-3269300-hero-e6cdc28357c24fbe9c65d140d3c4fd43.JPG',
     toxicity: 'Non-toxic',
-    id: '20'
+    id: 20
   },
   {
     description:
@@ -586,7 +586,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/zszhHLbiDNAy2iqKvWs9IH63yRI=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/black-chokeberry-growing-profile-3269200-hero-28b2810b28d2446b88270ab2ee2a8f1c.jpg',
     toxicity: 'Nontoxic',
-    id: '21'
+    id: 21
   },
   {
     description:
@@ -614,7 +614,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/LM_EPst8ULncmIDV6c1kdr3Bnyg=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/kararileysyngoniumextra-2-af28966509c94000942ecc8f23fd3c2d.jpg',
     toxicity: 'Toxic to dogs and cats',
-    id: '22'
+    id: 22
   },
   {
     description:
@@ -642,7 +642,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/bfY38iW_BIY7SB0KIHHAao9sbDk=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/arrowwood-viburnum-shrubs-growing-tips-2132732-03-2dffc26b32fb48a99fd570fedde9be53.jpg',
     toxicity: 'Nontoxic',
-    id: '23'
+    id: 23
   },
   {
     description:
@@ -670,7 +670,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/A4n8qxjbQfTBVi6Y1wPW-NRhoRg=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/tips-for-growing-artichokes-1403455-13-5b92939b6a6148249efe57c7ae1456a3.jpg',
     toxicity: 'Non-toxic',
-    id: '24'
+    id: 24
   },
   {
     description:
@@ -698,7 +698,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/tEuiI_kT1Km0TTqCKNqrlHdnZ4k=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-604575453-5a7dbd09875db9003744e791.jpg',
     toxicity: 'Non-toxic',
-    id: '25'
+    id: 25
   },
   {
     description:
@@ -726,7 +726,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/-m6UmDSu8pKbHYJYmbneeckiKyo=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/grow-calla-lily-indoors-1902501-5-7cfd93394fac40db87484f82521726a0.jpg',
     toxicity: 'Toxic to dogs and cats',
-    id: '26'
+    id: 26
   },
   {
     description:
@@ -754,7 +754,7 @@ export const plants = [
     image:
       'https://www.thespruce.com/thmb/NLz8ni2K9k946fCCCgtLW9uA0vQ=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-542293518-59c8cb76a83445c19b37221ab552a021.jpg',
     toxicity: 'Non-toxic',
-    id: '27'
+    id: 27
   }
 ]
 

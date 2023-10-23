@@ -43,7 +43,14 @@
           }
         }
       ],
-      "expo-image-picker"
+      "expo-image-picker",
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "",
+          "enableGooglePay": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
@@ -54,7 +61,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "project-id"
+        "projectId": "8db5c768-e491-4136-8a0b-6ebdd5e137aa"
       }
     }
   }

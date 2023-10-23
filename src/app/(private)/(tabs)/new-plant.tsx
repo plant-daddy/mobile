@@ -18,7 +18,7 @@ export default function NewPlant() {
     <View style={{ marginVertical: 64, alignItems: 'center' }}>
       <AddPlant
         title="Add new plant"
-        onSubmit={() => {
+        beforeSubmit={() => {
           if (!canCreatePlant) onOpen()
         }}
       />

@@ -8,4 +8,4 @@ const local = () =>
 
 export const web = () => `${local()}:3000`
 
-export const api = () => `${local()}:3333`
+export const api = () => 'https://plant-daddy-back-4pef65mhla-rj.a.run.app'
