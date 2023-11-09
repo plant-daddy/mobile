@@ -1,22 +1,15 @@
-import { plants } from '@/utils/plant'
+import { type APIResponse } from '@/service/api'
+import { type Plant } from '@/utils/plant'
 import { useQuery } from '@tanstack/react-query'
+import { type AxiosInstance } from 'axios'
 
-export const useUserPlant = (id: number) =>
+export const useUserPlant = (id: string, api: AxiosInstance) =>
   useQuery({
     queryKey: ['userPlant'],
     queryFn: async () => {
-      // const { api } = useApi()
+      const plant = (await api.get<APIResponse<Plant & { nickname: string }>>(`/plant/${id}`)).data
+        .result.data
 
-      // const plants = (
-      //   await api.get<
-      //     APIResponse<{ userPlants: Array<{ plant: Plant; id: number }>; count: number }>
-      //   >('/userPlants', {
-      //     params: { page: pageParam, limit: 30 }
-      //   })
-      // ).data.result.data
-
-      const plant = plants.find((p) => p.id === id)
-
-      return plant ? { ...plant, name: 'Minha planta daora' } : undefined
+      return plant
     }
   })

@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
           refreshToken: data.result.data.refreshToken
         })
       } catch (error) {
-        if (isAxiosError(error)) console.error(error.response)
+        if (isAxiosError(error)) JSON.stringify(error, null, 2)
       }
     },
     [setAccessToken, setRefreshToken]
@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       try {
         const { data } = await publicApi.post<
           APIResponse<{ accessToken: string; refreshToken: string }>
-        >('/user', params)
+        >('/user', { ...params, role: 'endUser' })
 
         await setTokens({
           accessToken: data.result.data.accessToken,

@@ -16,7 +16,7 @@ export const ApiProvider = ({ children }: React.PropsWithChildren) => {
   const { signOut, accessToken, refreshToken, setTokens } = useAuth()
 
   const api = axios.create({
-    baseURL: `http://${apiUrl()}`,
+    baseURL: apiUrl(),
     headers: {
       Authorization: `Bearer ${accessToken}`
     }
@@ -27,7 +27,7 @@ export const ApiProvider = ({ children }: React.PropsWithChildren) => {
       return response
     },
     async (error: AxiosError) => {
-      console.error(JSON.stringify(error.response?.data, null, 2))
+      console.error(JSON.stringify(error, null, 2))
 
       if (error?.response?.status === 401) {
         const originalConfig = error.config!

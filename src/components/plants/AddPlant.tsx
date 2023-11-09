@@ -55,11 +55,9 @@ export const AddPlant = ({ title, beforeSubmit }: { title: string; beforeSubmit?
             handleSubmit,
             isValid,
             isSubmitting,
-            setFieldValue,
-            errors
+            setFieldValue
           }: FormikProps<PlantSchema>) => (
             <>
-              <Text>{JSON.stringify(errors)}</Text>
               <Select
                 searchableProps={['botanicalName', 'commonName', 'type']}
                 placeholder="Plant"

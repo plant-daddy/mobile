@@ -10,5 +10,5 @@ export interface APIResponse<T> {
 }
 
 export const publicApi = axios.create({
-  baseURL: `http://${api()}`
+  baseURL: api()
 })

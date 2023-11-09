@@ -24,12 +24,14 @@ export default function Home() {
   const {
     data: plants,
     fetchNextPage: fetchPlantsNextPage,
-    hasNextPage: hasNextPlantsPage
+    hasNextPage: hasNextPlantsPage,
+    isLoading: isPlantsLoading
   } = usePlants(api)
   const {
     data: userPlants,
     fetchNextPage: fetchUserPlantsNextPage,
-    hasNextPage: hasNextUserPlantsPage
+    hasNextPage: hasNextUserPlantsPage,
+    isLoading: isUserPlantsLoading
   } = useUserPlants(api)
 
   const loadNextPlantsPageData = () => {
@@ -94,7 +96,9 @@ export default function Home() {
         isUserPlant
         fetchNextPage={loadNextUserPlantsPageData}
         plants={userPlants?.pages.flatMap((page) => page.plants) ?? []}
+        loading={isUserPlantsLoading}
       />
+
       <GestureDetector gesture={gesture}>
         <Animated.View
           style={[
@@ -118,6 +122,7 @@ export default function Home() {
               borderRadius: 2
             }}
           />
+
           <ListView
             backgroundColor={colors.green.dark}
             textColor={colors.white.primary}
@@ -126,6 +131,7 @@ export default function Home() {
             fetchNextPage={loadNextPlantsPageData}
             plants={plants?.pages.flatMap((page) => page.plants) ?? []}
             disabled={!isBottomSheetUp}
+            loading={isPlantsLoading}
           />
         </Animated.View>
       </GestureDetector>

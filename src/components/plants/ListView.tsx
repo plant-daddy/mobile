@@ -4,7 +4,7 @@ import { HorizontalInset } from '@/theme/dimension'
 import { type Plant, getPlantFirstName } from '@/utils/plant'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Link, router } from 'expo-router'
-import { Image, View, type ViewProps } from 'react-native'
+import { ActivityIndicator, Image, View, type ViewProps } from 'react-native'
 
 import { Button, Select, SelectOption, Text, Title } from '../global'
 import { PlantsList } from './PlantsList'
@@ -17,6 +17,7 @@ export const ListView = ({
   plants,
   isUserPlant,
   disabled,
+  loading,
   fetchNextPage,
   ...rest
 }: {
@@ -27,6 +28,7 @@ export const ListView = ({
   plants: Plant[]
   isUserPlant?: boolean
   disabled?: boolean
+  loading: boolean
   fetchNextPage: () => void
 } & ViewProps) => (
   <View
@@ -91,9 +93,12 @@ export const ListView = ({
     {plants.length === 0 && isUserPlant && (
       <View style={{ alignSelf: 'center', gap: 8 }}>
         <Text>You have no plants yet</Text>
-        <Button primary>Add plant</Button>
+        <Link href="/new-plant" asChild>
+          <Button primary>Add plant</Button>
+        </Link>
       </View>
     )}
+    {loading && <ActivityIndicator color={textColor} />}
     {plants.length > 0 && (
       <PlantsList
         textColor={textColor}
