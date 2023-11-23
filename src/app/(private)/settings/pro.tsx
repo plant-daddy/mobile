@@ -5,22 +5,60 @@ import { useApi } from '@/contexts/api'
 import { useUser } from '@/hooks'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
-import { Image, ScrollView, View } from 'react-native'
+import { usePaymentSheet } from '@stripe/stripe-react-native'
+import { useEffect, useState } from 'react'
+import { Alert, Image, ScrollView, View } from 'react-native'
 
 export default function Pro() {
+  const [ready, setReady] = useState(false)
+
   const { api } = useApi()
-  const { data } = useUser(api)
+  const { data, refetch } = useUser(api)
 
-  // const { initPaymentSheet, presentPaymentSheet, loading } = usePaymentSheet()
+  const { initPaymentSheet, presentPaymentSheet, loading } = usePaymentSheet()
 
-  // useEffect(() => {
-  //   ;(async () => {
-  //     await initPaymentSheet({
-  //       customerId: data?.id,
+  useEffect(() => {
+    void initializePaymentSheet()
+  })
 
-  //     })
-  //   })()
-  // })
+  const initializePaymentSheet = async () => {
+    const { paymentIntentId, ephemeralKey, customerId } = {
+      paymentIntentId: '',
+      ephemeralKey: '',
+      customerId: ''
+    }
+
+    // const {
+    //   data: { paymentIntentId, ephemeralKey, customerId }
+    // } = await api.post('/payment')
+
+    const { error, paymentOption } = await initPaymentSheet({
+      customerId,
+      customerEphemeralKeySecret: ephemeralKey,
+      paymentIntentClientSecret: paymentIntentId,
+      merchantDisplayName: 'Plant Daddy'
+    })
+
+    console.log(error, paymentOption)
+
+    if (error) {
+      Alert.alert(`Error code: ${error.code}`, error.message)
+    } else {
+      setReady(true)
+    }
+  }
+
+  async function buy() {
+    const { error } = await presentPaymentSheet()
+
+    if (error) {
+      Alert.alert(`Error code: ${error.code}`, error.message)
+    } else {
+      Alert.alert('Success', 'Payment confirmed!')
+      await refetch()
+      setReady(false)
+    }
+  }
 
   return (
     <ScrollView
@@ -57,7 +95,7 @@ export default function Pro() {
         $10. You pay once and get access for life.
       </Text>
 
-      <Button primary disabled={data?.pro}>
+      <Button primary disabled={data?.pro || !ready} onPress={buy} isLoading={loading}>
         {data?.pro ? 'Benefits already acquired' : 'Buy now'}
       </Button>
     </ScrollView>

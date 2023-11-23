@@ -6,6 +6,7 @@ import { type Reminder } from '@/utils/reminders'
 import { Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito'
 import { Rubik_300Light, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik'
 import notifee, { EventType } from '@notifee/react-native'
+import { StripeProvider } from '@stripe/stripe-react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useFonts } from 'expo-font'
 import { Slot, SplashScreen, useRouter, useSegments } from 'expo-router'
@@ -76,9 +77,9 @@ export default function RootLayout() {
       <ApiProvider>
         <QueryClientProvider client={queryClient}>
           <GestureHandlerRootView style={{ flex: 1 }}>
-            {/* <StripeProvider publishableKey="pk_test_51K1Xp8C9627s8ysgDCBxpllc567ZpjG7JK2wjLi3xwphbGG7gEOTonE7llZVaINZ3cyD7xYAHvw1JW5tnCa9gwCG00kr0CgFI4"> */}
-            <InitialLayout />
-            {/* </StripeProvider> */}
+            <StripeProvider publishableKey="pk_test_51K1Xp8C9627s8ysgDCBxpllc567ZpjG7JK2wjLi3xwphbGG7gEOTonE7llZVaINZ3cyD7xYAHvw1JW5tnCa9gwCG00kr0CgFI4">
+              <InitialLayout />
+            </StripeProvider>
           </GestureHandlerRootView>
         </QueryClientProvider>
       </ApiProvider>
