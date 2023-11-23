@@ -5,13 +5,7 @@ import { Image, ScrollView, View } from 'react-native'
 
 import { GoBack, Text, Title } from '../global'
 
-export const Plant = ({
-  image,
-  commonName,
-  name,
-  botanicalName,
-  ...rest
-}: PlantType & { name?: string }) => {
+export const Plant = ({ image, commonName, nickname, botanicalName, ...rest }: PlantType) => {
   const { table, texts } = getPlanInfo(rest)
 
   return (
@@ -20,13 +14,13 @@ export const Plant = ({
         alignItems: 'flex-start'
       }}>
       <GoBack />
-      <Title style={{ marginTop: 16 }}>{name ?? getPlantFirstName(commonName)}</Title>
+      <Title style={{ marginTop: 16 }}>{nickname ?? getPlantFirstName(commonName)}</Title>
       <Image
         source={{ uri: image }}
         style={{ width: 260, height: 260, alignSelf: 'center', marginVertical: 16 }}
       />
       <Title style={{ fontSize: 20, textAlign: 'left' }}>
-        {botanicalName}, {name ? commonName : commonName.split(',').slice(1)}
+        {botanicalName}, {nickname ? commonName : commonName.split(',').slice(1)}
       </Title>
       {Object.keys(texts).map((key) => (
         <View key={key} style={{ marginVertical: 8, gap: 4 }}>

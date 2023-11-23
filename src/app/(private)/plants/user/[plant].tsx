@@ -22,10 +22,18 @@ export default function PlantDetails() {
         marginHorizontal: HorizontalInset,
         paddingVertical: VerticalInset
       }}>
-      <Plant {...data} name={data.nickname} />
+      <Plant {...data} />
       <Link
         asChild
-        href={{ pathname: '/add-reminder', params: { name: data.nickname, image: data.image } }}>
+        href={{
+          pathname: '/add-reminder',
+          params: {
+            name: data.nickname ?? data.commonName,
+            image:
+              data.image ??
+              'https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-monstera__0614197_pe686822_s5.jpg'
+          }
+        }}>
         <Button primary style={{ marginTop: 16 }}>
           Add reminder
         </Button>

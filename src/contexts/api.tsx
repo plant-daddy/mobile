@@ -1,10 +1,7 @@
 import { useAuth } from '@/contexts/auth'
 import { api as apiUrl } from '@/utils/env'
-import axios, { type AxiosError, type AxiosInstance } from 'axios'
+import axios, { type AxiosInstance } from 'axios'
 import React, { createContext, useContext } from 'react'
-
-let isRefreshing = false
-let failedRequestQueue: any[] = []
 
 interface ApiContextData {
   api: AxiosInstance
@@ -13,7 +10,7 @@ interface ApiContextData {
 const ApiContext = createContext<ApiContextData>({} as ApiContextData)
 
 export const ApiProvider = ({ children }: React.PropsWithChildren) => {
-  const { signOut, accessToken, refreshToken, setTokens } = useAuth()
+  const { accessToken } = useAuth()
 
   const api = axios.create({
     baseURL: apiUrl(),
@@ -22,61 +19,46 @@ export const ApiProvider = ({ children }: React.PropsWithChildren) => {
     }
   })
 
+  // api.interceptors.request.use(
+  //   (config) => {
+  //     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`
+  //     return config
+  //   },
+  //   async (error) => await Promise.reject(error)
+  // )
+
   api.interceptors.response.use(
-    (response) => {
-      return response
-    },
-    async (error: AxiosError) => {
-      console.error(JSON.stringify(error, null, 2))
+    (response) => response,
+    async (error) => {
+      // const originalRequest = error.config
 
-      if (error?.response?.status === 401) {
-        const originalConfig = error.config!
+      console.error(JSON.stringify(error.toJSON(), null, 2))
 
-        if (!isRefreshing) {
-          isRefreshing = true
+      // if (error?.response?.status === 401 && !originalRequest._retry) {
+      //   originalRequest._retry = true
 
-          api
-            .post('/refresh', {
-              refreshToken
-            })
-            .then(async (response) => {
-              const { accessToken: returnedAccessToken, refreshToken: returnedRefreshToken } =
-                response.data
+      //   try {
+      //     const {
+      //       data: { accessToken: returnedAccessToken, refreshToken: returnedRefreshToken }
+      //     } = await api.post('/refresh', {
+      //       refreshToken
+      //     })
 
-              await setTokens({
-                accessToken: returnedAccessToken,
-                refreshToken: returnedRefreshToken
-              })
+      //     await setTokens({
+      //       accessToken: returnedAccessToken,
+      //       refreshToken: returnedRefreshToken
+      //     })
 
-              api.defaults.headers.Authorization = `Bearer ${returnedAccessToken}`
+      //     originalRequest.headers.Authorization = `Bearer ${returnedAccessToken}`
 
-              failedRequestQueue.forEach((request) => request.onSuccess(returnedAccessToken))
-              failedRequestQueue = []
-            })
-            .catch((err) => {
-              failedRequestQueue.forEach((request) => request.onFailure(err))
-              failedRequestQueue = []
+      //     return await api(originalRequest)
+      //   } catch (err) {
+      //     console.error(JSON.stringify(isAxiosError(err) ? err.toJSON() : err, null, 2))
+      //     signOut()
+      //   }
+      // }
 
-              signOut()
-            })
-            .finally(() => {
-              isRefreshing = false
-            })
-        }
-        return await new Promise((resolve, reject) => {
-          failedRequestQueue.push({
-            onSuccess: (token: string) => {
-              originalConfig.headers.Authorization = `Bearer ${token}`
-              resolve(api(originalConfig))
-            },
-            onFailure: (err: AxiosError) => {
-              reject(err)
-            }
-          })
-        })
-      }
-
-      return await Promise.reject(error)
+      // return await Promise.reject(error)
     }
   )
 

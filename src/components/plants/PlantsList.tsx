@@ -26,7 +26,7 @@ const Plant = memo(function Plant({
           style={{ width: 120, height: 150, borderRadius: 16 }}
         />
         <Text {...(textColor && { style: { color: textColor } })}>
-          {getPlantFirstName(plant.commonName)}
+          {isUserPlant && plant.nickname ? plant.nickname : getPlantFirstName(plant.commonName)}
         </Text>
       </Pressable>
     </Link>

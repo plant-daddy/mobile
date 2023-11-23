@@ -7,9 +7,12 @@ export const useUserPlant = (id: string, api: AxiosInstance) =>
   useQuery({
     queryKey: ['userPlant'],
     queryFn: async () => {
-      const plant = (await api.get<APIResponse<Plant & { nickname: string }>>(`/plant/${id}`)).data
-        .result.data
+      const plant = (
+        await api.get<APIResponse<{ plant: Plant; id: number; nickname?: string }>>(
+          `/userPlant/${id}`
+        )
+      ).data.result.data
 
-      return plant
+      return { ...plant.plant, id: plant.id, nickname: plant.nickname }
     }
   })
