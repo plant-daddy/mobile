@@ -12,7 +12,7 @@ export default function NewPlant() {
 
   const { isOpen, onOpen, onClose } = useModal()
 
-  const canCreatePlant = !!user?.pro || !!(plants?.pages[0]?.count ?? 0 < 1)
+  const canCreatePlant = !!user?.subscribed || !!(plants?.pages[0]?.count ?? 0 < 1)
 
   return (
     <View style={{ marginVertical: 64, alignItems: 'center' }}>

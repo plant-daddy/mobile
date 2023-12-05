@@ -20,10 +20,16 @@ export const useImagePicker = () => ({
 
       const img = result.assets[0]
 
+      const localUri = img.uri
+      const filename = localUri.split('/').pop() ?? ''
+
+      const match = /\.(\w+)$/.exec(filename)
+      const type = match ? `image/${match[1]}` : 'image'
+
       return {
-        file: img.uri,
-        fileName: img.fileName,
-        fileType: img.type
+        uri: localUri,
+        name: filename,
+        type
       }
     } catch (err) {
       console.error(err)

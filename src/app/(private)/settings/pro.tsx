@@ -3,6 +3,7 @@ import { Button, Text, Title } from '@/components/global'
 import { BenefitCard } from '@/components/settings'
 import { useApi } from '@/contexts/api'
 import { useUser } from '@/hooks'
+import { type APIResponse } from '@/service/api'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
 import { usePaymentSheet } from '@stripe/stripe-react-native'
@@ -19,27 +20,23 @@ export default function Pro() {
 
   useEffect(() => {
     void initializePaymentSheet()
-  })
+  }, [])
 
   const initializePaymentSheet = async () => {
-    const { paymentIntentId, ephemeralKey, customerId } = {
-      paymentIntentId: '',
-      ephemeralKey: '',
-      customerId: ''
-    }
+    const {
+      data: {
+        result: {
+          data: { paymentIntentId }
+        }
+      }
+    } = await api.post<APIResponse<{ paymentIntentId: string }>>('/payment', {
+      amount: 1000
+    })
 
-    // const {
-    //   data: { paymentIntentId, ephemeralKey, customerId }
-    // } = await api.post('/payment')
-
-    const { error, paymentOption } = await initPaymentSheet({
-      customerId,
-      customerEphemeralKeySecret: ephemeralKey,
+    const { error } = await initPaymentSheet({
       paymentIntentClientSecret: paymentIntentId,
       merchantDisplayName: 'Plant Daddy'
     })
-
-    console.log(error, paymentOption)
 
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message)
@@ -95,8 +92,8 @@ export default function Pro() {
         $10. You pay once and get access for life.
       </Text>
 
-      <Button primary disabled={data?.pro || !ready} onPress={buy} isLoading={loading}>
-        {data?.pro ? 'Benefits already acquired' : 'Buy now'}
+      <Button primary disabled={data?.subscribed || !ready} onPress={buy} isLoading={loading}>
+        {data?.subscribed ? 'Benefits already acquired' : 'Buy now'}
       </Button>
     </ScrollView>
   )

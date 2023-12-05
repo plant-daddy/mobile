@@ -2,6 +2,7 @@ import { type APIResponse, publicApi } from '@/service/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { isAxiosError } from 'axios'
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import { Alert } from 'react-native'
 
 interface Storaged {
   accessToken: string
@@ -76,6 +77,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         })
       } catch (error) {
         if (isAxiosError(error)) JSON.stringify(error, null, 2)
+        Alert.alert('Invalid credentials')
       }
     },
     [setAccessToken, setRefreshToken]

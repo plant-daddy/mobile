@@ -1,8 +1,10 @@
+import { useApi } from '@/contexts/api'
 import { useImagePicker, useModal } from '@/hooks'
+import { type APIResponse } from '@/service/api'
 import { colors, fonts } from '@/theme'
 import { MaterialIcons } from '@expo/vector-icons'
 import React from 'react'
-import { Image, Pressable, View } from 'react-native'
+import { Alert, Image, Pressable, View } from 'react-native'
 
 import { Modal } from './Modal'
 import { Text } from './Text'
@@ -35,20 +37,51 @@ const Item = ({
 
 export const ImagePicker = ({
   defaultValue,
-  onChange
+  onChange,
+  value
 }: {
   defaultValue: string
   onChange: (e: string) => void
+  value?: string
 }) => {
   const { isOpen, onClose, onOpen } = useModal()
+  const { api } = useApi()
 
   const { pickImage } = useImagePicker()
+
+  const handleUpload = async () => {
+    const res = await pickImage()
+
+    if (!res) {
+      Alert.alert('An error has occurred while selecting an image')
+      onClose()
+      return
+    }
+
+    const formData = new FormData()
+
+    // @ts-expect-error
+    formData.append('file', res)
+
+    try {
+      const { data } = await api.post<APIResponse<{ imageUrl: string }>>('/uploadImage', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      onChange(data.result.data.imageUrl)
+    } catch {
+      Alert.alert('An error has occurred while selecting an image')
+    }
+
+    onClose()
+  }
 
   return (
     <>
       <Pressable style={{ alignSelf: 'center' }} onPress={onOpen}>
         <Image
-          source={{ uri: defaultValue }}
+          source={{ uri: value ?? defaultValue }}
           style={{ width: 120, height: 120, borderRadius: 60 }}
         />
         <View
@@ -79,24 +112,8 @@ export const ImagePicker = ({
           </Pressable>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 24 }}>
-          <Item
-            icon="camera-alt"
-            text="Camera"
-            onPress={async () => {
-              const res = await pickImage(true)
-              onChange(res?.file ?? '')
-              onClose()
-            }}
-          />
-          <Item
-            icon="photo"
-            text="Gallery"
-            onPress={async () => {
-              const res = await pickImage()
-              onChange(res?.file ?? '')
-              onClose()
-            }}
-          />
+          <Item icon="camera-alt" text="Camera" onPress={handleUpload} />
+          <Item icon="photo" text="Gallery" onPress={handleUpload} />
         </View>
       </Modal>
     </>

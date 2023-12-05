@@ -8,12 +8,19 @@ import { ScrollView, View } from 'react-native'
 import { z } from 'zod'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
 
-const validationSchema = z.object({
-  username: z.string().optional(),
-  password: z.string().optional(),
-  confirmPassword: z.string().optional(),
-  image: z.string().optional()
-})
+const validationSchema = z
+  .object({
+    username: z.string(),
+    password: z.string().optional(),
+    confirmPassword: z.string().optional(),
+    profilePicture: z.string().optional()
+  })
+  .refine(
+    ({ confirmPassword, password }) => {
+      return password === confirmPassword
+    },
+    { message: 'Passwords must be the same', path: ['confirmPassword'] }
+  )
 
 export type AccountSchema = z.infer<typeof validationSchema>
 
@@ -26,8 +33,8 @@ export default function EditAccount() {
 
   if (!data) return <></>
 
-  const submit = async (data: AccountSchema) => {
-    await api.patch('/user', data)
+  const submit = async (form: AccountSchema) => {
+    await api.patch('/user', form)
     await refetch()
     goBack()
   }
@@ -53,12 +60,17 @@ export default function EditAccount() {
           setFieldValue,
           handleSubmit,
           isValid,
-          isSubmitting
+          isSubmitting,
+          errors
         }: FormikProps<AccountSchema>) => (
           <View style={{ width: '100%', gap: 16, marginTop: 24 }}>
             <ImagePicker
-              defaultValue={data.image ?? ''}
-              onChange={async (e) => await setFieldValue('image', e)}
+              defaultValue={
+                data.profilePicture ??
+                'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png'
+              }
+              value={values.profilePicture}
+              onChange={async (e) => await setFieldValue('profilePicture', e)}
             />
 
             <Input label="Name" value={values.username} onChangeText={handleChange('username')} />
@@ -75,6 +87,7 @@ export default function EditAccount() {
               secureTextEntry
               value={values.confirmPassword}
               onChangeText={handleChange('confirmPassword')}
+              error={errors.confirmPassword}
             />
 
             <Button

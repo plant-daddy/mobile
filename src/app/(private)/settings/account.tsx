@@ -26,7 +26,11 @@ export default function Account() {
 
       <View style={{ width: '100%', gap: 16, marginTop: 24 }}>
         <Image
-          source={{ uri: data.image }}
+          source={{
+            uri:
+              data.profilePicture ??
+              'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png'
+          }}
           style={{ width: 120, height: 120, borderRadius: 60, alignSelf: 'center' }}
         />
         <AccountItem name="Name" value={data.username} />

@@ -82,7 +82,7 @@ export default function AddReminder() {
   const { data: notifications } = useNotifications()
   const { isOpen, onClose, onOpen } = useModal()
 
-  const canCreateReminder = !!user?.pro || !!((notifications ?? []).length < 1)
+  const canCreateReminder = !!user?.subscribed || !!((notifications ?? []).length < 1)
 
   const submit = async (data: ReminderSchema) => {
     await scheduleReminder(data)
