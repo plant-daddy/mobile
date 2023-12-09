@@ -1,4 +1,4 @@
-import { startCase } from 'lodash'
+import { omit, startCase } from 'lodash'
 
 export interface Plant {
   description: string
@@ -31,8 +31,7 @@ export function getPlanInfo(plant: Partial<Plant>): {
   texts: Record<string, string | undefined>
   table: Record<string, string>
 } {
-  const { description, water, fertilizer, soil, light, temperatureAndHumidity, id, ...table } =
-    plant
+  const { description, water, fertilizer, soil, light, temperatureAndHumidity, ...table } = plant
 
   return {
     texts: {
@@ -43,6 +42,8 @@ export function getPlanInfo(plant: Partial<Plant>): {
       Light: light,
       'Temperature and humidity': temperatureAndHumidity
     },
-    table: Object.fromEntries(Object.entries(table).map(([k, v]) => [startCase(k), v]))
+    table: Object.fromEntries(
+      Object.entries(omit(table, 'id', 'createdAt', 'updatedAt')).map(([k, v]) => [startCase(k), v])
+    )
   }
 }

@@ -5,12 +5,19 @@ import { fonts } from '@/theme'
 import { getPlantFirstName } from '@/utils/plant'
 import { useRouter } from 'expo-router'
 import { Formik, type FormikProps } from 'formik'
-import { useState } from 'react'
 import { Image, View } from 'react-native'
 import { z } from 'zod'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
 
-import { Button, Input, Select, SelectOption, Text, Title } from '../global'
+import {
+  Button,
+  Input,
+  Select,
+  SelectOption,
+  Text,
+  Title,
+  WithTabKeyboardAvoidingView
+} from '../global'
 
 const validationSchema = z.object({
   plantId: z.string(),
@@ -19,12 +26,21 @@ const validationSchema = z.object({
 
 export type PlantSchema = z.infer<typeof validationSchema>
 
-export const AddPlant = ({ title, beforeSubmit }: { title: string; beforeSubmit?: () => void }) => {
+export const AddPlant = ({
+  title,
+  beforeSubmit,
+  shouldSubmit = true,
+  defaultPlant = ''
+}: {
+  title: string
+  beforeSubmit?: () => void
+  shouldSubmit?: boolean
+  defaultPlant?: string
+}) => {
   const { api } = useApi()
 
   const { data } = usePlants(api)
   const { refetch } = useUserPlants(api)
-  const [selectedValue, setSelectedValue] = useState()
 
   const { push } = useRouter()
 
@@ -39,13 +55,13 @@ export const AddPlant = ({ title, beforeSubmit }: { title: string; beforeSubmit?
   }
 
   return (
-    <View>
+    <WithTabKeyboardAvoidingView>
       <AddPlantSvg style={{ alignSelf: 'center' }} />
       <Title style={{ marginBottom: 12 }}>{title}</Title>
       <View style={{ gap: 8 }}>
         <Formik
           initialValues={{
-            plantId: ''
+            plantId: defaultPlant
           }}
           onSubmit={submit}
           validationSchema={toFormikValidationSchema(validationSchema)}>
@@ -55,7 +71,8 @@ export const AddPlant = ({ title, beforeSubmit }: { title: string; beforeSubmit?
             handleSubmit,
             isValid,
             isSubmitting,
-            setFieldValue
+            setFieldValue,
+            resetForm
           }: FormikProps<PlantSchema>) => (
             <>
               <Select
@@ -64,12 +81,11 @@ export const AddPlant = ({ title, beforeSubmit }: { title: string; beforeSubmit?
                 data={data?.pages.flatMap((item) => item.plants) ?? []}
                 selectedValueLabel={getPlantFirstName(
                   (data?.pages.flatMap((item) => item.plants) ?? []).find(
-                    (p) => p.id === selectedValue
+                    (p) => p.id.toString() === values.plantId
                   )?.commonName ?? ''
                 )}
                 value={values.plantId}
                 onSelect={async (value) => {
-                  setSelectedValue(value)
                   await setFieldValue('plantId', value.toString())
                 }}
                 inputLabel="*Search by: botanical name, common name or type"
@@ -82,7 +98,8 @@ export const AddPlant = ({ title, beforeSubmit }: { title: string; beforeSubmit?
                       />
                       <Text
                         style={{
-                          fontFamily: item.id === selectedValue ? fonts.rubik400 : fonts.rubik300,
+                          fontFamily:
+                            String(item.id) === values.plantId ? fonts.rubik400 : fonts.rubik300,
                           fontSize: 18,
                           flexShrink: 1
                         }}>
@@ -99,9 +116,9 @@ export const AddPlant = ({ title, beforeSubmit }: { title: string; beforeSubmit?
               />
               <Button
                 primary
-                onPress={() => {
+                onPress={async () => {
                   if (beforeSubmit) beforeSubmit()
-                  handleSubmit()
+                  if (shouldSubmit) handleSubmit()
                 }}
                 disabled={!isValid}
                 isLoading={isSubmitting}>
@@ -111,6 +128,6 @@ export const AddPlant = ({ title, beforeSubmit }: { title: string; beforeSubmit?
           )}
         </Formik>
       </View>
-    </View>
+    </WithTabKeyboardAvoidingView>
   )
 }

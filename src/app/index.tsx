@@ -161,7 +161,7 @@ export default function Carousel() {
         </Button>
 
         <Link href="/signin" asChild>
-          <Pressable style={{ alignSelf: 'flex-end', marginBottom: 24 }}>
+          <Pressable style={{ alignSelf: 'flex-end', marginBottom: 24, padding: 4 }}>
             <Text>Skip</Text>
           </Pressable>
         </Link>

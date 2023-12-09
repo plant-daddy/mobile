@@ -88,7 +88,7 @@ export default function SignUp() {
           )}
         </Formik>
         <Link href="/signin" asChild>
-          <Pressable style={{ alignSelf: 'center' }}>
+          <Pressable style={{ alignSelf: 'center', padding: 4 }}>
             <Text>Login</Text>
           </Pressable>
         </Link>

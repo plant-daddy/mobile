@@ -37,8 +37,8 @@ export default function SignIn() {
         <Title style={{ marginVertical: 8 }}>Login</Title>
         <Formik
           initialValues={{
-            email: '',
-            password: ''
+            email: 'workshop@email.com',
+            password: '1234567890'
           }}
           onSubmit={submit}
           validationSchema={toFormikValidationSchema(validationSchema)}>
@@ -75,7 +75,7 @@ export default function SignIn() {
               </Button>
 
               <Link href="/signup" asChild>
-                <Pressable style={{ alignSelf: 'center' }}>
+                <Pressable style={{ alignSelf: 'center', padding: 4 }}>
                   <Text>Sign up</Text>
                 </Pressable>
               </Link>

@@ -4,7 +4,7 @@ import { memo } from 'react'
 import { Image, Pressable } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 
-import { Text } from '../global'
+import { Text } from '../../global'
 
 const Plant = memo(function Plant({
   plant,

@@ -4,7 +4,7 @@ import { useApi } from '@/contexts/api'
 import { useUserPlant } from '@/hooks'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
-import { Link, useLocalSearchParams } from 'expo-router'
+import { Link, useLocalSearchParams, useRouter } from 'expo-router'
 import { ActivityIndicator, ScrollView } from 'react-native'
 
 export default function PlantDetails() {
@@ -14,6 +14,8 @@ export default function PlantDetails() {
 
   const { data } = useUserPlant(plant as string, api)
 
+  const router = useRouter()
+
   if (!data) return <ActivityIndicator color={colors.green.dark} />
 
   return (
@@ -22,7 +24,19 @@ export default function PlantDetails() {
         marginHorizontal: HorizontalInset,
         paddingVertical: VerticalInset
       }}>
-      <Plant {...data} />
+      <Plant
+        {...data}
+        icon="notifications-active"
+        onPress={() => {
+          router.push(
+            // @ts-expect-error
+            `/add-reminder?name=${data.nickname ?? data.commonName}&image=${
+              data.image ??
+              'https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-monstera__0614197_pe686822_s5.jpg'
+            }`
+          )
+        }}
+      />
       <Link
         asChild
         href={{

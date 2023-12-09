@@ -1,27 +1,65 @@
 /* eslint-disable multiline-ternary */
-import { fonts } from '@/theme'
+import { colors, fonts } from '@/theme'
+import { ScreenWidth } from '@/theme/dimension'
 import { type Plant as PlantType, getPlanInfo, getPlantFirstName } from '@/utils/plant'
-import { Image, ScrollView, View } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
+import { Image, Pressable, View } from 'react-native'
 
 import { GoBack, Text, Title } from '../global'
 
-export const Plant = ({ image, commonName, nickname, botanicalName, ...rest }: PlantType) => {
+export const Plant = ({
+  image,
+  commonName,
+  nickname,
+  botanicalName,
+  icon,
+  onPress,
+  ...rest
+}: PlantType & {
+  icon: React.ComponentProps<typeof MaterialIcons>['name']
+  onPress: () => void
+}) => {
   const { table, texts } = getPlanInfo(rest)
 
   return (
-    <ScrollView
-      contentContainerStyle={{
+    <View
+      style={{
         alignItems: 'flex-start'
       }}>
-      <GoBack />
-      <Title style={{ marginTop: 16 }}>{nickname ?? getPlantFirstName(commonName)}</Title>
+      <View
+        style={{
+          flexDirection: 'row',
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 16
+          }}>
+          <GoBack />
+          <Title>{nickname ?? getPlantFirstName(commonName)}</Title>
+        </View>
+
+        <Pressable
+          onPress={onPress}
+          style={{
+            padding: 6
+          }}>
+          <MaterialIcons name={icon} size={24} color={colors.green.dark} />
+        </Pressable>
+      </View>
       <Image
         source={{ uri: image }}
-        style={{ width: 260, height: 260, alignSelf: 'center', marginVertical: 16 }}
+        style={{ width: ScreenWidth, height: 260, alignSelf: 'center', marginVertical: 16 }}
       />
+
       <Title style={{ fontSize: 20, textAlign: 'left' }}>
         {botanicalName}, {nickname ? commonName : commonName.split(',').slice(1)}
       </Title>
+
       {Object.keys(texts).map((key) => (
         <View key={key} style={{ marginVertical: 8, gap: 4 }}>
           <Text style={{ fontFamily: fonts.rubik400, fontSize: 18 }}>{key}</Text>
@@ -44,6 +82,6 @@ export const Plant = ({ image, commonName, nickname, botanicalName, ...rest }: P
           <Text style={{ textAlign: 'right', flexShrink: 1 }}>{table[key]}</Text>
         </View>
       ))}
-    </ScrollView>
+    </View>
   )
 }

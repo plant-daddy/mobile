@@ -1,4 +1,5 @@
-import { GoBackSVG } from '@/assets/svg/goBack'
+import { colors } from '@/theme'
+import { MaterialIcons } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import { Pressable, type PressableProps } from 'react-native'
 
@@ -8,6 +9,6 @@ export const GoBack = ({ ...rest }: PressableProps) => (
     onPress={() => {
       router.back()
     }}>
-    <GoBackSVG />
+    <MaterialIcons name="arrow-back-ios" size={24} color={colors.green.dark} />
   </Pressable>
 )

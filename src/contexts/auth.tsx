@@ -1,6 +1,8 @@
 import { type APIResponse, publicApi } from '@/service/api'
+import notifee from '@notifee/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { isAxiosError } from 'axios'
+import { useRouter } from 'expo-router'
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 
@@ -29,6 +31,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const [accessToken, setAccessToken] = useState<string>()
   const [refreshToken, setRefreshToken] = useState<string>()
+
+  const router = useRouter()
 
   useEffect(() => {
     void loadStorageData()
@@ -94,6 +98,8 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
           accessToken: data.result.data.accessToken,
           refreshToken: data.result.data.refreshToken
         })
+
+        router.push('/first-plant')
       } catch (err) {
         console.error(JSON.stringify(err, null, 2))
       }
@@ -105,6 +111,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
     setAccessToken(undefined)
     setRefreshToken(undefined)
     await AsyncStorage.removeItem('@Tokens')
+    await notifee.cancelAllNotifications()
   }, [])
 
   return (

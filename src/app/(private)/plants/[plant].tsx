@@ -3,7 +3,7 @@ import { useApi } from '@/contexts/api'
 import { usePlant } from '@/hooks'
 import { colors } from '@/theme'
 import { HorizontalInset, VerticalInset } from '@/theme/dimension'
-import { useLocalSearchParams } from 'expo-router'
+import { useLocalSearchParams, useRouter } from 'expo-router'
 import { ActivityIndicator, ScrollView } from 'react-native'
 
 export default function PlantDetails() {
@@ -15,13 +15,24 @@ export default function PlantDetails() {
 
   if (!data) return <ActivityIndicator color={colors.green.dark} />
 
+  const router = useRouter()
+
   return (
     <ScrollView
       contentContainerStyle={{
         marginHorizontal: HorizontalInset,
         paddingVertical: VerticalInset
       }}>
-      <Plant {...data} />
+      <Plant
+        {...data}
+        icon="library-add"
+        onPress={() => {
+          router.push(
+            // @ts-expect-error
+            `/new-plant?plant=${plant as string}`
+          )
+        }}
+      />
     </ScrollView>
   )
 }

@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { ListView } from '@/components/plants'
+import { Button, Text } from '@/components/global'
+import { ListView, PlantsList } from '@/components/plants'
 import { useApi } from '@/contexts/api'
 import { usePlants, useUserPlants } from '@/hooks'
 import { colors } from '@/theme'
 import { ScreenHeight, ScreenWidth } from '@/theme/dimension'
+import { Link } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
   Extrapolate,
@@ -85,19 +87,41 @@ export default function Home() {
     scrollTo(-ScreenHeight / 2.5)
   }, [])
 
+  const userPlantsArray = userPlants?.pages.flatMap((page) => page.plants) ?? []
+
   return (
     <View style={{ height: ScreenHeight * 0.6 }}>
       <ListView
-        backgroundColor={colors.white.primary}
         textColor={colors.green.dark}
         title="MY PLANTS"
-        style={{ paddingTop: 48 }}
-        count
+        style={{ paddingTop: 48, backgroundColor: colors.white.primary }}
         isUserPlant
-        fetchNextPage={loadNextUserPlantsPageData}
-        plants={userPlants?.pages.flatMap((page) => page.plants) ?? []}
-        loading={isUserPlantsLoading}
-      />
+        plants={userPlantsArray}>
+        {isUserPlantsLoading ? (
+          <ActivityIndicator color={colors.green.dark} />
+        ) : (
+          <>
+            {userPlantsArray.length === 0 ? (
+              <View style={{ alignSelf: 'center', gap: 8 }}>
+                <Text>You have no plants yet</Text>
+                <Link href="/new-plant" asChild>
+                  <Button primary>Add plant</Button>
+                </Link>
+              </View>
+            ) : (
+              <Text style={{ color: colors.green.dark, marginBottom: 4 }}>
+                You have {userPlantsArray.length} plants!
+              </Text>
+            )}
+            <PlantsList
+              textColor={colors.green.dark}
+              isUserPlant
+              fetchNextPage={loadNextUserPlantsPageData}
+              plants={userPlants?.pages.flatMap((page) => page.plants) ?? []}
+            />
+          </>
+        )}
+      </ListView>
 
       <GestureDetector gesture={gesture}>
         <Animated.View
@@ -124,15 +148,21 @@ export default function Home() {
           />
 
           <ListView
-            backgroundColor={colors.green.dark}
             textColor={colors.white.primary}
             title="ALL PLANTS"
-            style={{ marginBottom: 200 }}
-            fetchNextPage={loadNextPlantsPageData}
-            plants={plants?.pages.flatMap((page) => page.plants) ?? []}
-            disabled={!isBottomSheetUp}
-            loading={isPlantsLoading}
-          />
+            style={{ marginBottom: 200, backgroundColor: colors.green.dark }}
+            plants={plants?.pages.flatMap((page) => page.plants) ?? []}>
+            {isPlantsLoading ? (
+              <ActivityIndicator color={colors.white.primary} />
+            ) : (
+              <PlantsList
+                textColor={colors.white.primary}
+                fetchNextPage={loadNextPlantsPageData}
+                plants={plants?.pages.flatMap((page) => page.plants) ?? []}
+                disabled={!isBottomSheetUp}
+              />
+            )}
+          </ListView>
         </Animated.View>
       </GestureDetector>
     </View>
